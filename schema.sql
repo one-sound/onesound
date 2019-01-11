@@ -1,3 +1,10 @@
+
+-- Run schema
+-- psql -d onesound -f schema.sql 
+
+-- Push db to heroku
+-- heroku pg:push onesound DATABASE_URL --app one-sound
+
 DROP TABLE IF EXISTS music;
 
 CREATE TABLE music (
