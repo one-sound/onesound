@@ -1,24 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta http-equiv="X-UA-Compatible" content="ie=edge">
- <title>One Sound - a global music generator</title>
-</head>
+<%- include('../layout/head.ejs') %>
     <body>
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/saved">Saved</a></li>
-                </ul>
-            </nav>
-            <div class="header-content">
-                <h1>One Sound</h1>
-                <h3>a global music generator</h3>
-            </div>
-        </header>
+        <%- include('../layout/header.ejs') %>
+        <main>
+            <section class="intro">
+                OneSound aims to unite people of all cultures through the love of music. Users will select a genre of music or an artist they feel like listening to, and a playlist of songs from diverse cultures and languages will be generated. The world is vast, but we believe music is a universal language that can bring us all a little closer together.
+            </section>
+            <section>
+                <h2>How does it work?</h2>
+                
+                <figure>
+                    <h3>Artist</h3>
+                    <img src="https://via.placeholder.com/150">
+                    <p>Search by artist to generate a playlist of similar artists from different countries around the world! Not sure where to start? Here are some examples below:</p>
+                    <ul>
+                        <li>Meek Mill</li>
+                        <li>Animal Collective</li>
+                        <li>Bush</li>
+                        <li>Ariana Grande</li>
+                        <li>Odezsa</li>
+                        <li>Backstreet Boys</li>
+                    </ul>
+                </figure>
+                <figure>
+                    <h3>Song Title</h3>
+                    <img src="https://via.placeholder.com/150">
+                    <p>Search by song title to generate a playlist of songs from around the world with the same title! Not sure where to start? Here are some examples of key words:</p>
+                    <ul>
+                        <li>Reflections</li>
+                        <li>Animals</li>
+                        <li>Love</li>
+                        <li>Boyfriend</li>
+                        <li>Forever</li>
+                        <li>Promise</li>
+                    </ul>
+                </figure>
+                <figure>
+                    <h3>Genre</h3>
+                    <img src="https://via.placeholder.com/150">
+                    <p>Search by genre to generate a playlist of songs from around the world with a similar genre! Not sure where to start? Here are some examples of key words:</p>
+                    <ul>
+                        <li>Pop</li>
+                        <li>Rock</li>
+                        <li>EDM</li>
+                        <li>Rap</li>
+                        <li>Jazz</li>
+                        <li>Traditional</li>
+                    </ul>
+                </figure>
+            </section>
+        </main>
+        <%- include('../layout/footer.ejs') %>
     </body>
 </html>
