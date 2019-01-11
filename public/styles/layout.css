@@ -1,0 +1,39 @@
+/* Header styling */
+header{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    color: white;
+    width: 100%;
+    height: 450px;
+    background: url('../assets/header-bg.png') repeat; /* placeholder ish for now*/
+    /* background: linear-gradient(180deg, rgba(197,70,100,1) 0%, rgba(13,1,117,1) 100%);  */
+}
+.header-content{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+/* Main + Section styling */
+main{
+    width: 960px;
+    margin: 0 auto;
+}
+
+
+/* Footer styling */
+footer{
+    background:linear-gradient(180deg, #360265 0%, rgba(13,1,117,1) 100%);
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+footer a{
+    text-decoration: none;
+    color: #5ca8df;
+    line-height: 24pt;
+}

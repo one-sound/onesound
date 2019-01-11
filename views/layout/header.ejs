@@ -1,13 +1,23 @@
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/saved">Saved</a></li>
+    </ul>
+
+    <form action="/searches" method="post" class="nav-search">
+        <input type="text" name="search" placeholder="Search for an artist, song title, or genre" required>
+        <select>
+            <option value="artist">Artist</option>
+            <option value="title">Song Title</option>
+            <option value="genre">Genre</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+</nav>
 <header>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/saved">Saved</a></li>
-        </ul>
-    </nav>
     <div class="header-content">
-        <h1>One Sound</h1>
+        <h1>OneSound</h1>
         <h3>a global music generator</h3>
         <form action="/searches" method="post">
             <input type="text" name="search" placeholder="Search for an artist, song title, or genre" required>
