@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Barlow|Timmana');
 @import url('./reset.css');
+@import url('./layout.css');
+@import url('./modules.css');
 
 *{
     box-sizing: border-box;
@@ -43,6 +45,7 @@ header{
     /* background: linear-gradient(180deg, rgba(197,70,100,1) 0%, rgba(13,1,117,1) 100%);  */
 }
 .header-content{
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -70,10 +73,40 @@ footer{
 
 
 /* Text styling */
+h1, h2{
+    font-family: Timmana, Arial, Helvetica, sans-serif;
+}
 h1{
-    font-family: Timmana;
     font-size: 84pt;
-    margin-bottom: 10px;
     color: white;
     text-shadow: 3px 3px #5ca8df;
+}
+h3{
+    font-size: 16pt;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Form */
+input, textarea, button, select{
+    font-family: Barlow, Arial, Helvetica, sans-serif;
+    height: 30px;
+    border: 0;
+    margin-left: -3px;
+}
+header input{
+    padding: 10px;
+    width: 250px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: 1px solid lightgray;
+}
+header button{
+    background-color: #e02c7d;
+    width: 80px;
+    color: white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+select{
 }
