@@ -71,7 +71,6 @@ function search(req, res) {
   // request.post('/user')
     .set('Content-Type', 'application/json')
     .then(result => {
-      
       let musics = JSON.parse(result.text);
       // console.log(result.text);
       const playList = musics.results.map(song => new Music(song))
