@@ -9,10 +9,16 @@
                         <img src="<%= song.album_image_url %>">
                         <h3><%= song.song %></h3>
                         <h5><%= song.artist %></h5>
+
+                        <h6><b>Album:</b> <%= song.album %></h6>
+                        <h6><b>Genre:</b> <%= song.genre %></h6>
+                        <h6><b>Country of Origin:</b> <%= song.country %></h6>
+
                         <span>Album: <%= song.album %></span>
                         <span>Genre: <%= song.genre %></span>
                         <span>Country of Origin: <%= song.country %></span>
                         <video src="<%= song.previewUrl %>"></video>
+
                     </li>
                 <% }); %>
             </section>
