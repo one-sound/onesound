@@ -69,14 +69,10 @@ function search(req, res) {
     .set('Content-Type', 'application/json')
     .then(result => {
       let musics = JSON.parse(result.text);
-      // console.log(result.text);
+      // console.log(musics);
       const playList = musics.results.map(song => new Music(song))
       // console.log(musics);
-      console.log(playList)
-      res.redirect('/')
-      // res.render('pages/index', {musics})
-      console.log(searchType)
-    })
+      res.render('pages/searches/show', {playList})
 
 }
 
