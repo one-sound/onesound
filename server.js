@@ -49,30 +49,35 @@ function home(req, res) {
 function search(req, res) {
   let searchStr = req.body.search
   console.log(req.body)
-  console.log(searchStr);
+  // console.log(searchStr);
   let searchType = req.body.search
-  console.log(searchType);
-  let url = new URL(`https://itunes.apple.com/search?term${searchStr}`); 
 
-// Search Type Conditionals
-if(searchType === 'artist') {
-  url += `${searchStr}`
-} else if (searchType === 'song title') {
-  url += `${searchStr}`
-} else if (searchType === 'genre') {
-  url += `${searchStr}`
-}
-// console.log(url);
-// Superagent Request
+  // console.log(searchType);
+  let url = `https://itunes.apple.com/search?term=${searchStr}`
 
-return superagent.post(url)
-  .then(result => {
-  
-     let musics = result.body.results.map(song => new song(song));
-     console.log(musics);
-     res.render('pages/show.ejs', {musics})
-  
-  })
+  // Search Type Conditionals
+  if(searchType === 'artist') {
+    url += `${searchStr}`
+  } else if (searchType === 'song title') {
+    url += `${searchStr}`
+  } else if (searchType === 'genre') {
+    url += `${searchStr}`
+  }
+  // console.log(url);
+  // Superagent Request
+  return superagent.get(url)
+  // request.post('/user')
+    .set('Content-Type', 'application/json')
+    .then(result => {
+
+      // console.log(result.text);
+      // let musics = result.body.results.map(song => new Song(song))
+      let musics = JSON.parse(result.text);
+      // console.log(musics);
+      console.log(musics.results[0].collectionName)
+      res.redirect('/')
+      // res.render('pages/index', {musics})
+    })
 
 }
 
