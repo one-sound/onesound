@@ -28,9 +28,22 @@ app.get('/', home);
 app.post('/searches', search);
 
 //Function calls
-function home(req, res){
+function home(req, res) {
   res.render('pages/index');
 }
+
+// function home(req, res){
+//   let SQL = 'SELECT * FROM music';
+
+//   return client.query(SQL)
+//     .then(data => {
+//       res.render('pages/index', {music: music.rows});
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.render('pages/error', {err});
+//     });
+// }
 
 // Search
 function search(req, res) {
@@ -38,6 +51,7 @@ function search(req, res) {
   console.log(req.body)
   // console.log(searchStr);
   let searchType = req.body.search
+
   // console.log(searchType);
   let url = `https://itunes.apple.com/search?term=${searchStr}`
 
@@ -74,12 +88,12 @@ function handleError(err, res) {
 
 // Constructor
 function Music(obj){
-  this.artist = obj.results[0].artistName;
-  this.album = obj.results[0].collectionName;
-  this.song = obj.results[0].trackName;
-  this.genre = obj.results[0].primaryGenreName;
-  this.country = obj.results[0].country;
-  this.album_image_url = obj.results[0].artworkUrl100;
+  this.artist = obj.results.artistName;
+  this.album = obj.results.collectionName;
+  this.song = obj.results.trackName;
+  this.genre = obj.results.primaryGenreName;
+  this.country = obj.results.country;
+  this.album_image_url = obj.results.artworkUrl100;
 }
 
 
