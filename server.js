@@ -51,6 +51,7 @@ function about(req, res) {
 
 // Search
 function search(req, res) {
+
   let searchStr = req.body.search[0];
   let searchType = req.body.search[1];
 
@@ -79,6 +80,7 @@ function search(req, res) {
       getAristCountry(req, res, musics)
 
       // console.log(musics);
+
       // console.log(playList)
     })
 }
@@ -100,6 +102,7 @@ function getAristCountry(req, res, result){
       })
   })
   res.render('pages/searches/show', {playList});
+
 }
 
 // Error handle
