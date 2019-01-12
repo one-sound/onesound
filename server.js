@@ -49,11 +49,13 @@ function home(req, res) {
 function search(req, res) {
   let searchStr = req.body.search
   console.log(req.body)
-  // console.log(searchStr);
+  console.log(searchStr);
   let searchType = req.body.search
 
   // console.log(searchType);
-  let url = `https://itunes.apple.com/search?term=${searchStr}`
+  let url = `https://itunes.apple.com/search?term=${searchStr}&limit=10`
+
+  console.log(url);
 
   // Search Type Conditionals
   if(searchType === 'artist') {
@@ -69,12 +71,12 @@ function search(req, res) {
   // request.post('/user')
     .set('Content-Type', 'application/json')
     .then(result => {
-
-      // console.log(result.text);
-      // let musics = result.body.results.map(song => new Song(song))
+      
       let musics = JSON.parse(result.text);
+      // console.log(result.text);
+      const playList = musics.results.map(song => new Music(song))
       // console.log(musics);
-      console.log(musics.results[0].collectionName)
+      console.log(playList)
       res.redirect('/')
       // res.render('pages/index', {musics})
     })
@@ -90,12 +92,12 @@ function handleError(err, res) {
 
 // Constructor
 function Music(obj){
-  this.artist = obj.results.artistName;
-  this.album = obj.results.collectionName;
-  this.song = obj.results.trackName;
-  this.genre = obj.results.primaryGenreName;
-  this.country = obj.results.country;
-  this.album_image_url = obj.results.artworkUrl100;
+  this.artist = obj.artistName;
+  this.album = obj.collectionName;
+  this.song = obj.trackName;
+  this.genre = obj.primaryGenreName;
+  this.country = obj.country;
+  this.album_image_url = obj.artworkUrl100;
 }
 
 
