@@ -28,17 +28,31 @@ app.get('/', home);
 app.post('/searches', search);
 
 //Function calls
-function home(req, res){
+function home(req, res) {
   res.render('pages/index');
 }
 
+// function home(req, res){
+//   let SQL = 'SELECT * FROM music';
+
+//   return client.query(SQL)
+//     .then(data => {
+//       res.render('pages/index', {music: music.rows});
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.render('pages/error', {err});
+//     });
+// }
+
 // Search
 function search(req, res) {
+
   let searchStr = req.body.search[0]
   // console.log(searchStr);
   let searchType = req.body.search[1]
-  let url = `https://itunes.apple.com/search?term=${searchStr}&kind=song&limit=1&lang`
-
+  let url = `https://itunes.apple.com/search?term=${searchStr}&kind=song&limit=10&lang`
+  
   // Search Type Conditionals
   if(searchType == 'artist') {
     url += `&artistName=${searchStr}`
@@ -54,12 +68,11 @@ function search(req, res) {
   // request.post('/user')
     .set('Content-Type', 'application/json')
     .then(result => {
-
-      // console.log(result.text);
-      // let musics = result.body.results.map(song => new Song(song))
       let musics = JSON.parse(result.text);
+      // console.log(result.text);
+      const playList = musics.results.map(song => new Music(song))
       // console.log(musics);
-      console.log(musics.results[0])
+      console.log(playList)
       res.redirect('/')
       // res.render('pages/index', {musics})
       console.log(searchType)
@@ -76,12 +89,12 @@ function handleError(err, res) {
 
 // Constructor
 function Music(obj){
-  this.artist = obj.results[0].artistName;
-  this.album = obj.results[0].collectionName;
-  this.song = obj.results[0].trackName;
-  this.genre = obj.results[0].primaryGenreName;
-  this.country = obj.results[0].country;
-  this.album_image_url = obj.results[0].artworkUrl100;
+  this.artist = obj.artistName;
+  this.album = obj.collectionName;
+  this.song = obj.trackName;
+  this.genre = obj.primaryGenreName;
+  this.country = obj.country;
+  this.album_image_url = obj.artworkUrl100;
 }
 
 
