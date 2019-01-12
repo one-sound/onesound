@@ -68,11 +68,10 @@ if(searchType === 'artist') {
 return superagent.post(url)
   .then(result => {
   
-    // console.log(result);
-     let musics = result.body.results.map(song => new song(song))
+     let musics = result.body.results.map(song => new song(song));
      console.log(musics);
      res.render('pages/show.ejs', {musics})
-     return JSON.parse(musics);
+  
   })
 
 }
