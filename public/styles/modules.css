@@ -43,6 +43,7 @@ header button{
     border-bottom-right-radius: 5px;
 }
 select{
+    border-radius: 0;
 }
 
 header input[type="text"]:focus, header select:focus, header button:hover{

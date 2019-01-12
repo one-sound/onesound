@@ -55,8 +55,6 @@ function search(req, res) {
   // request.post('/user')
     .set('Content-Type', 'application/json')
     .then(result => {
-
-      // console.log(result.text);
       // let musics = result.body.results.map(song => new Song(song))
       let musics = JSON.parse(result.text);
       // console.log(musics);
