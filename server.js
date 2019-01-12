@@ -73,7 +73,7 @@ function search(req, res) {
       const playList = musics.results.map(song => new Music(song))
       // console.log(musics);
       res.render('pages/searches/show', {playList})
-
+    })
 }
 
 // Error handle
