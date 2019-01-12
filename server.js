@@ -53,7 +53,7 @@ function search(req, res) {
   let searchType = req.body.search
 
   // console.log(searchType);
-  let url = `https://itunes.apple.com/search?term=${searchStr}&limit=10`
+  let url = `https://itunes.apple.com/search?term=${searchStr}&limit=10&entity=musicVideo`
 
   console.log(url);
 
@@ -76,8 +76,8 @@ function search(req, res) {
       const playList = musics.results.map(song => new Music(song))
       // console.log(musics);
       console.log(playList)
-      res.redirect('/')
-      // res.render('pages/index', {musics})
+     
+     res.render('pages/searches/show', {playList})
     })
 
 }
@@ -91,12 +91,15 @@ function handleError(err, res) {
 
 // Constructor
 function Music(obj){
+  console.log(obj);
   this.artist = obj.artistName;
   this.album = obj.collectionName;
   this.song = obj.trackName;
   this.genre = obj.primaryGenreName;
   this.country = obj.country;
   this.album_image_url = obj.artworkUrl100;
+  this.musicVideo = obj.previewUrl;
+ 
 }
 
 
