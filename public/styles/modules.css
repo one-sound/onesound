@@ -53,3 +53,20 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     border: none;
     outline: none;
 }
+
+/* playlist results */
+.playlist li{
+    list-style: none;
+    clear: both;
+    border: 1px solid lightgray;
+    padding: 15px;
+    min-height: 180px;
+    margin-bottom: 20px;
+}
+.playlist li img{
+    float: left;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
+    object-fit: contain;
+}
