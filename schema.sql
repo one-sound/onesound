@@ -1,9 +1,9 @@
+
 -- Run schema
 -- psql -d onesound -f schema.sql 
 
 -- Push db to heroku
--- heroku pg:push books_app DATABASE_URL --app ad-nc-booklist
-
+-- heroku pg:push onesound DATABASE_URL --app one-sound
 
 DROP TABLE IF EXISTS music;
 
