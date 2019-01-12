@@ -47,7 +47,6 @@ function home(req, res) {
 
 // Search
 function search(req, res) {
-
   let searchStr = req.body.search[0]
   // console.log(searchStr);
   let searchType = req.body.search[1]
@@ -72,6 +71,7 @@ function search(req, res) {
       // console.log(musics);
       const playList = musics.results.map(song => new Music(song))
       // console.log(musics);
+
       res.render('pages/searches/show', {playList})
     })
 }
@@ -85,12 +85,15 @@ function handleError(err, res) {
 
 // Constructor
 function Music(obj){
+  console.log(obj);
   this.artist = obj.artistName;
   this.album = obj.collectionName;
   this.song = obj.trackName;
   this.genre = obj.primaryGenreName;
   this.country = obj.country;
   this.album_image_url = obj.artworkUrl100;
+  this.musicVideo = obj.previewUrl;
+ 
 }
 
 

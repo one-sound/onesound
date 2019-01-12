@@ -12,6 +12,7 @@
                         <span>Album: <%= song.album %></span>
                         <span>Genre: <%= song.genre %></span>
                         <span>Country of Origin: <%= song.country %></span>
+                        <video src="<%= song.previewUrl %>"></video>
                     </li>
                 <% }); %>
             </section>
