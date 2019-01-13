@@ -117,14 +117,17 @@ function getArtistCountry(song){
 }
 
 function getAlbumData(song){
-  let url = `https://api.musixmatch.com/ws/1.1/album.get?apikey=${process.env.MUSIXMATCH_API_KEY}&album_id=`;
+  let url = `https://api.musixmatch.com/ws/1.1/album.get?apikey=${process.env.MUSIXMATCH_API_KEY}&album_id&&f_music_genre_id=`;
   url += song.track.album_id;
+  url += song.track.music_genre_id;
 
-  return superagent.get(url)
+  return superagent.get(url + `&page_size=1` + `&f_music_genre_id`)
     .then(result => {
       let album = JSON.parse(result.text);
-      let albumData = [album.message.body];
-      console.log(album.message.body.album);
+      console.log(album);
+      let albumData = [album.message.body.track_list];
+      console.log(albumData);
+      console.log(album.message.body.albumData);
       return albumData;
     })
 }
@@ -140,7 +143,7 @@ function Music(obj, artistCountry, albumData){
   this.artist = obj.artist_name;
   this.album = obj.album_name;
   this.song = obj.track_name;
-  this.genre = albumData[1];
+  this.genre = albumData;
   this.country = artistCountry;
   this.album_image_url = albumData[0] || '/assets/nophoto.JPG';
 }
