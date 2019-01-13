@@ -83,10 +83,11 @@ function search(req, res) {
         artistCountry.then((result) => {
           let newSong = new Music(song.track, result);
           playList.push(newSong);
+          console.log(newSong)
         });
       })
-        // .then(data =>
-        //   console.log(data))
+        //  .then(data =>
+        //    console.log(data))
       res.render('pages/searches/show', {playList});
 
 
@@ -121,6 +122,7 @@ function getAlbumCover(song){
   return superagent.get(url)
     .then(result => {
       let album = JSON.parse(result.text);
+      console.log(album);
       let albumArt = album.message.body;
       console.log(albumArt)
       return albumArt;
