@@ -70,39 +70,61 @@ function search(req, res) {
   // console.log(url);
 
   // Superagent Request
-  return superagent.get(url)
+  superagent.get(url)
   // request.post('/user')
     .set('Content-Type', 'application/json')
     .then(result => {
+      const playList = [];
       let musics = JSON.parse(result.text);
-      // console.log(musics.message.body.track_list[0].track.primary_genres.music_genre_list)
-      
-      getArtistCountry(req, res, musics)
+      let trackList = musics.message.body.track_list;
 
-      // console.log(musics);
+      trackList.forEach(song => {
+        const artistCountry = getArtistCountry(song);
+        artistCountry.then((result) => {
+          let newSong = new Music(song.track, result);
+          playList.push(newSong);
+        });
+      })
+        .then(data =>
+          console.log(data))
+      // res.render('pages/searches/show', {playList});
 
-      // console.log(playList)
+
+    }).catch(err => {
+      console.log(err);
+    })
+
+}
+
+function getArtistCountry(song){
+  let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
+  url += song.track.artist_id;
+// function getArtistCountry(req, res, result){
+//   const playList = [];
+//   let trackList = result.message.body.track_list;
+//   trackList.forEach(song => {
+//     let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
+//     url += song.track.artist_id;
+
+  return superagent.get(url)
+    .then(result => {
+      let artist = JSON.parse(result.text);
+      let artistCountry = artist.message.body.artist.artist_country;
+      return artistCountry;
     })
 }
 
-function getArtistCountry(req, res, result){
-  const playList = [];
-  let trackList = result.message.body.track_list;
-  trackList.forEach(song => {
-    let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
-    url += song.track.artist_id;
+function getAlbumCover(song){
+  let url = `https://api.musixmatch.com/ws/1.1/album.get?apikey=${process.env.MUSIXMATCH_API_KEY}&album_id=`;
+  url += song.track.album_id;
 
-    return superagent.get(url)
-      .then(result => {
-        let artist = JSON.parse(result.text);
-        let artistCountry = artist.message.body.artist.artist_country;
-
-        let newSong = new Music(song.track, artistCountry);
-        playList.push(newSong);
-      })
-  })
-  res.render('pages/searches/show', {playList});
-
+  return superagent.get(url)
+    .then(result => {
+      let album = JSON.parse(result.text);
+      let albumArt = album.message.body;
+      console.log(albumArt)
+      return albumArt;
+    })
 }
 
 // Error handle
@@ -119,7 +141,6 @@ function Music(obj, artistCountry){
   // this.genre = obj.track.primary_genres.music_genre_list[0];
   this.country = artistCountry;
   // this.album_image_url = obj.artworkUrl100;
-  console.log(this)
 }
 
 
