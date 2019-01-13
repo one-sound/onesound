@@ -24,13 +24,17 @@ app.set('view engine', 'ejs')
 
 // Routes
 app.get('/', home);
-
+app.get('/about', about);
 app.post('/searches', search);
 
 //Function calls
 function home(req, res) {
   res.render('pages/index');
 }
+function about(req, res) {
+  res.render('pages/about');
+}
+
 
 // function home(req, res){
 //   let SQL = 'SELECT * FROM music';
@@ -47,37 +51,80 @@ function home(req, res) {
 
 // Search
 function search(req, res) {
-  let searchStr = req.body.search
-  console.log(req.body)
-  // console.log(searchStr);
-  let searchType = req.body.search
+
+  let searchStr = req.body.search[0];
+  let searchType = req.body.search[1];
+
   // console.log(searchType);
-  let url = `https://itunes.apple.com/search?term=${searchStr}`
+  // let url = `https://itunes.apple.com/search?term=${searchStr}&limit=10`
+  let url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}`
 
   // Search Type Conditionals
   if(searchType === 'artist') {
-    url += `${searchStr}`
+    url += `&q_artist=${searchStr}`
   } else if (searchType === 'song title') {
-    url += `${searchStr}`
+    url += `&q_track=${searchStr}`
   } else if (searchType === 'genre') {
-    url += `${searchStr}`
+    url += `&f_music_genre_id=${searchStr}`
   }
   // console.log(url);
+
   // Superagent Request
-  return superagent.get(url)
+  superagent.get(url)
   // request.post('/user')
     .set('Content-Type', 'application/json')
     .then(result => {
-
-      // console.log(result.text);
-      // let musics = result.body.results.map(song => new Song(song))
+      const playList = [];
       let musics = JSON.parse(result.text);
-      // console.log(musics);
-      console.log(musics.results[0].collectionName)
-      res.redirect('/')
-      // res.render('pages/index', {musics})
+      let trackList = musics.message.body.track_list;
+
+      trackList.forEach(song => {
+        const artistCountry = getArtistCountry(song);
+        artistCountry.then((result) => {
+          let newSong = new Music(song.track, result);
+          playList.push(newSong);
+        });
+      })
+        // .then(data =>
+        //   console.log(data))
+      res.render('pages/searches/show', {playList});
+
+
+    }).catch(err => {
+      console.log(err);
     })
 
+}
+
+function getArtistCountry(song){
+  let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
+  url += song.track.artist_id;
+// function getArtistCountry(req, res, result){
+//   const playList = [];
+//   let trackList = result.message.body.track_list;
+//   trackList.forEach(song => {
+//     let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
+//     url += song.track.artist_id;
+
+  return superagent.get(url)
+    .then(result => {
+      let artist = JSON.parse(result.text);
+      let artistCountry = artist.message.body.artist.artist_country;
+      return artistCountry;
+    })
+}
+
+function getAlbumCover(song){
+  let url = `https://api.musixmatch.com/ws/1.1/album.get?apikey=${process.env.MUSIXMATCH_API_KEY}&album_id=`;
+  url += song.track.album_id;
+
+  return superagent.get(url)
+    .then(result => {
+      let album = JSON.parse(result.text);
+      let albumArt = album.message.body;
+      console.log(albumArt)
+      return albumArt;
+    })
 }
 
 // Error handle
@@ -86,15 +133,14 @@ function handleError(err, res) {
   if(res) res.status(500).render('pages/error');
 }
 
-
 // Constructor
-function Music(obj){
-  this.artist = obj.results.artistName;
-  this.album = obj.results.collectionName;
-  this.song = obj.results.trackName;
-  this.genre = obj.results.primaryGenreName;
-  this.country = obj.results.country;
-  this.album_image_url = obj.results.artworkUrl100;
+function Music(obj, artistCountry){
+  this.artist = obj.artist_name;
+  this.album = obj.album_name;
+  this.song = obj.track_name;
+  // this.genre = obj.track.primary_genres.music_genre_list[0];
+  this.country = artistCountry;
+  // this.album_image_url = obj.artworkUrl100;
 }
 
 

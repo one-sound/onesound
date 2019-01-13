@@ -20,13 +20,13 @@
         <h1>OneSound</h1>
         <h3>a global music generator</h3>
         <form action="/searches" method="post">
-            <input type="text" id="search" placeholder="Search for an artist, song title, or genre" required>
-            <!-- <select>
-                <option value="artist" name="search">Artist</option>
-                <option value="title" name="search">Song Title</option>
-                <option value="genre" name="search">Genre</option>
+            <input type="text" name="search" placeholder="Search for an artist, song title, or genre" required>
+            <select name="search" required>
+                <option value="artist">Artist</option>
+                <option value="title">Song Title</option>
+                <option value="genre">Genre</option>
             </select>
-            <button type="submit">Search</button> -->
+            <button type="submit">Search</button> 
         </form>
     </div>
 </header>

@@ -43,6 +43,7 @@ header button{
     border-bottom-right-radius: 5px;
 }
 select{
+    border-radius: 0;
 }
 
 header input[type="text"]:focus, header select:focus, header button:hover{
@@ -51,4 +52,55 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     transition: 0.3s;
     border: none;
     outline: none;
+}
+
+/* about page */
+.about{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+}
+.about figure{
+    min-width: 420px;
+}
+.about figure img{
+    float: left;
+    width: 120px;
+    height: 200px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+/* playlist results */
+.playlist li{
+    list-style: none;
+    clear: both;
+    border: 1px solid lightgray;
+    padding: 15px;
+    min-height: 180px;
+    margin-bottom: 20px;
+    transition: 0.2s ease;
+    opacity: 0.8;
+    border-radius: 10px;
+}
+.playlist li img{
+    float: left;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
+    object-fit: contain;
+}
+.playlist h5{
+    margin-bottom: 20px;
+}
+.playlist h6 b{
+    font-weight: bold;
+}
+.playlist li:hover{
+    transition: 0.2s ease;
+    opacity: 1;
+    background-color: rgb(247, 247, 247);
+    box-shadow: 0px 0px 8px #2b2b2b;
 }
