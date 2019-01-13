@@ -85,9 +85,9 @@ function search(req, res) {
           playList.push(newSong);
         });
       })
-        .then(data =>
-          console.log(data))
-      // res.render('pages/searches/show', {playList});
+        // .then(data =>
+        //   console.log(data))
+      res.render('pages/searches/show', {playList});
 
 
     }).catch(err => {
