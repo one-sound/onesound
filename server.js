@@ -62,7 +62,7 @@ function search(req, res) {
   // Search Type Conditionals
   if(searchType === 'artist') {
     url += `&q_artist=${searchStr}`
-  } else if (searchType === 'song title') {
+  } else if (searchType === 'title') {
     url += `&q_track=${searchStr}`
   } else if (searchType === 'genre') {
     url += `&f_music_genre_id=${searchStr}`
@@ -75,30 +75,39 @@ function search(req, res) {
     .set('Content-Type', 'application/json')
     .then(result => {
       const playList = [];
+      let counter = 0;
       let musics = JSON.parse(result.text);
       let trackList = musics.message.body.track_list;
 
       trackList.forEach(song => {
         const artistCountry = getArtistCountry(song);
         artistCountry.then((result) => {
-          let newSong = new Music(song.track, result);
-          playList.push(newSong);
-        });
+          console.log(trackList.length, counter)
+          const albumData = getAlbumData(song);
+          albumData.then(data => {
+            let newSong = new Music(song.track, result, data);
+            playList.push(newSong);
+            counter++;//makes sure that all of items in forEach has finished before rendering
+            if (counter === trackList.length){ //makes sure that all of items in forEach has finished before rendering
+              renderPlaylist(playList, res);
+            }
+          })
+        })
       })
-        .then(data =>
-          console.log(data))
-      // res.render('pages/searches/show', {playList});
-
+      
     }).catch(err => {
       console.log(err);
     })
 
 }
 
+function renderPlaylist(playList, res){
+  res.render('pages/searches/show', {playList});
+}
+
 function getArtistCountry(song){
   let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
   url += song.track.artist_id;
-
   return superagent.get(url)
     .then(result => {
       let artist = JSON.parse(result.text);
@@ -107,16 +116,16 @@ function getArtistCountry(song){
     })
 }
 
-function getAlbumCover(song){
+function getAlbumData(song){
   let url = `https://api.musixmatch.com/ws/1.1/album.get?apikey=${process.env.MUSIXMATCH_API_KEY}&album_id=`;
   url += song.track.album_id;
 
   return superagent.get(url)
     .then(result => {
       let album = JSON.parse(result.text);
-      let albumArt = album.message.body;
-      console.log(albumArt)
-      return albumArt;
+      let albumData = [album.message.body];
+      console.log(album.message.body.album);
+      return albumData;
     })
 }
 
@@ -127,13 +136,13 @@ function handleError(err, res) {
 }
 
 // Constructor
-function Music(obj, artistCountry){
+function Music(obj, artistCountry, albumData){
   this.artist = obj.artist_name;
   this.album = obj.album_name;
   this.song = obj.track_name;
-  // this.genre = obj.track.primary_genres.music_genre_list[0];
+  this.genre = albumData[1];
   this.country = artistCountry;
-  // this.album_image_url = obj.artworkUrl100;
+  this.album_image_url = albumData[0] || '/assets/nophoto.JPG';
 }
 
 
