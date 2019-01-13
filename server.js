@@ -77,7 +77,7 @@ function search(req, res) {
       let musics = JSON.parse(result.text);
       // console.log(musics.message.body.track_list[0].track.primary_genres.music_genre_list)
       
-      getAristCountry(req, res, musics)
+      getArtistCountry(req, res, musics)
 
       // console.log(musics);
 
@@ -85,7 +85,7 @@ function search(req, res) {
     })
 }
 
-function getAristCountry(req, res, result){
+function getArtistCountry(req, res, result){
   const playList = [];
   let trackList = result.message.body.track_list;
   trackList.forEach(song => {
