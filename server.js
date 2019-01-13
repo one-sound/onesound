@@ -89,6 +89,7 @@ function search(req, res) {
           console.log(data))
       // res.render('pages/searches/show', {playList});
 
+
     }).catch(err => {
       console.log(err);
     })
@@ -98,6 +99,12 @@ function search(req, res) {
 function getArtistCountry(song){
   let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
   url += song.track.artist_id;
+// function getArtistCountry(req, res, result){
+//   const playList = [];
+//   let trackList = result.message.body.track_list;
+//   trackList.forEach(song => {
+//     let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
+//     url += song.track.artist_id;
 
   return superagent.get(url)
     .then(result => {
