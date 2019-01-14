@@ -35,7 +35,8 @@ function about(req, res) {
   res.render('pages/about');
 }
 
-var genre;
+// var genre = music.genres.get;
+var baseURL = 'https://api.musixmatch.com/ws/1.1';
 
 // Search
 function search(req, res) {
@@ -48,14 +49,14 @@ function search(req, res) {
   let url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}&s_track_rating=desc&s_artist_rating=desc&f_has_lyrics&limit=10`
 
   // Search Type Conditionals
-  if (genre) { url += `&f_music_genre_id}`;}
+  // if (genre) { url += `&f_music_genre_id}`;}
   if(searchType === 'artist') {
     url += `&q_artist=${searchStr}`
   } else if (searchType === 'title') {
     url += `&q_track=${searchStr}`
 
-  // } else if (searchType === 'genre') {
-  //   url += `&f_music_genre_id=${searchStr}`
+  } else if (searchType === 'genre') {
+    url += `&f_music_genre_id=${searchStr}`
   }
   // console.log(url);
 
@@ -86,6 +87,22 @@ function search(req, res) {
         })
       })
     }).catch(err => console.log(err));
+}
+
+// Get By Id
+function getById(song) {
+  let url = `${baseURL}/${type}.get?format=json&apikey=${process.env.MUSIXMATCH_API_KEY}`;
+  console.log(url);
+  
+  if (type == 'genre') { url += `&f_music_genre_id=${id}`; }
+  
+  return superagent.get(url)
+    .then(result => {
+      let musicGenre = JSON.parse(result.text);
+      let searchGenre = musicGenre.message.body.genre.music_genre_list;
+      return searchGenre; 
+    }).catch(err => handleError(err));
+
 }
 
 function renderPlaylist(playList, res){
