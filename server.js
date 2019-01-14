@@ -76,26 +76,23 @@ function search(req, res) {
     .then(result => {
       const playList = [];
       let counter = 0;
-      // console.log(result.text);
       let musics = JSON.parse(result.text);
       let trackList = musics.message.body.track_list;
 
       trackList.forEach(song => {
         const artistCountry = getArtistCountry(song); //needs to obtain artist country thru a separate API call
         artistCountry.then((result) => {
-          // const albumData = getAlbumData(song);
-          let newSong = new Music(song.track, result);
-          playList.push(newSong);
-          counter++;//makes sure that all of items in forEach has finished before rendering
+          let albumData = getAlbumData(song);
+          albumData.then(data => {
+            let newSong = new Music(song.track, result, data);
+            playList.push(newSong);
+            counter++;//makes sure that all of items in forEach has finished before rendering
 
-          if (counter === trackList.length){ //makes sure that all of items in forEach has finished before rendering
-            renderPlaylist(playList, res);
-          }
-
-          // this will be where we call a function to obtain album cover
-          // albumData.then(data => {
-
-          // })
+            if (counter === trackList.length){ //makes sure that all of items in forEach has finished before rendering
+              renderPlaylist(playList, res);
+              console.log(playList);
+            }
+          })
         })
       })
     }).catch(err => console.log(err));
@@ -116,14 +113,16 @@ function getArtistCountry(song){
     }).catch(err => handleError(err));
 }
 
-function getAlbumData(song){ //what will be used to obtain album art data
+function getAlbumData(song){ //what will be used to obtain album art data + release date
   let url = `https://api.musixmatch.com/ws/1.1/album.get?apikey=${process.env.MUSIXMATCH_API_KEY}&album_id=`;
   url += song.track.album_id;
 
   return superagent.get(url)
     .then(result => {
       let album = JSON.parse(result.text);
-      return albumData;
+      let art = ''; //art search term goes here
+      let releaseDate = album.message.body.album.album_release_date;
+      return [art, releaseDate];
       // }
     }).catch(err => handleError(err));
 }
@@ -135,14 +134,16 @@ function handleError(err, res) {
 }
 
 // Constructor
-function Music(obj, artistCountry){
+function Music(obj, artistCountry, albumData){
   this.artist = obj.artist_name;
   this.album = obj.album_name;
   this.song = obj.track_name;
-  this.genre = obj.primary_genres.music_genre_list[0].music_genre.music_genre_name || '-'; //not all tracks have a genre listed in musixmatch
-  this.genre_id = obj.primary_genres.music_genre_list[0].music_genre.music_genre_id || 0; //what gets input from musixmatch api - not rendered
+  this.genre = obj.primary_genres.music_genre_list[0] && obj.primary_genres.music_genre_list[0].music_genre.music_genre_name || '-'; //not all tracks have a genre listed in musixmatch
+  this.genre_id = obj.primary_genres.music_genre_list[0] && obj.primary_genres.music_genre_list[0].music_genre.music_genre_id || 0; //what gets input from musixmatch api - not rendered
   this.country = artistCountry;
+
   this.album_image_url = obj.album_art || '/assets/nophoto.JPG';
+  this.album_release_date = albumData[1] || '-';
 }
 
 // Localhost listener
