@@ -35,19 +35,7 @@ function about(req, res) {
   res.render('pages/about');
 }
 
-
-// function home(req, res){
-//   let SQL = 'SELECT * FROM music';
-
-//   return client.query(SQL)
-//     .then(data => {
-//       res.render('pages/index', {music: music.rows});
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.render('pages/error', {err});
-//     });
-// }
+var genre;
 
 // Search
 function search(req, res) {
@@ -60,12 +48,14 @@ function search(req, res) {
   let url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}&s_track_rating=desc&s_artist_rating=desc&f_has_lyrics&limit=10`
 
   // Search Type Conditionals
+  if (genre) { url += `&f_music_genre_id}`;}
   if(searchType === 'artist') {
     url += `&q_artist=${searchStr}`
   } else if (searchType === 'title') {
     url += `&q_track=${searchStr}`
-  } else if (searchType === 'genre') {
-    url += `&f_music_genre_id=${searchStr}`
+
+  // } else if (searchType === 'genre') {
+  //   url += `&f_music_genre_id=${searchStr}`
   }
   // console.log(url);
 
@@ -105,6 +95,8 @@ function renderPlaylist(playList, res){
 function getArtistCountry(song){
   let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
   url += song.track.artist_id;
+ 
+
   return superagent.get(url)
     .then(result => {
       let artist = JSON.parse(result.text);
