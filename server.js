@@ -2,25 +2,25 @@
 // Application Dependencies
 const express = require('express');
 const pg = require('pg');
-const superagent = require('superagent')
+const superagent = require('superagent');
 
-require ('dotenv').config()
+require ('dotenv').config();
 
 // Application Setup
-const app = express()
-const PORT = process.env.PORT || 3000
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Parse request.body
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 
 //Database Setup
-const client = new pg.Client(process.env.DATABASE_URL)
-client.connect()
-client.on('error', err => console.error(err))
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.error(err));
 
 // Set the view engine for server-side templating
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 
 // Routes
 app.get('/', home);
@@ -44,8 +44,8 @@ function search(req, res) {
   let searchType = req.body.search[1];
 
   // console.log(searchType);
-  // let url = `https://itunes.apple.com/search?term=${searchStr}&limit=10`
-  let url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}&s_track_rating=desc`
+  // let url = `https://itunes.apple.com/search?term=${searchStr}&limit=50`
+  let url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}&s_track_rating=desc&s_artist_rating=desc&f_has_lyrics&limit=10`
 
   // Search Type Conditionals
   if (genre) { url += `&f_music_genre_id}`;}
@@ -70,25 +70,22 @@ function search(req, res) {
       let trackList = musics.message.body.track_list;
 
       trackList.forEach(song => {
-        const artistCountry = getArtistCountry(song);
+        const artistCountry = getArtistCountry(song); //needs to obtain artist country thru a separate API call
         artistCountry.then((result) => {
-          console.log(trackList.length, counter)
-          const albumData = getAlbumData(song);
+          let albumData = getAlbumData(song);
           albumData.then(data => {
             let newSong = new Music(song.track, result, data);
             playList.push(newSong);
             counter++;//makes sure that all of items in forEach has finished before rendering
+
             if (counter === trackList.length){ //makes sure that all of items in forEach has finished before rendering
               renderPlaylist(playList, res);
+              console.log(playList);
             }
           })
         })
       })
-      
-    }).catch(err => {
-      console.log(err);
-    })
-
+    }).catch(err => console.log(err));
 }
 
 function renderPlaylist(playList, res){
@@ -105,23 +102,21 @@ function getArtistCountry(song){
       let artist = JSON.parse(result.text);
       let artistCountry = artist.message.body.artist.artist_country;
       return artistCountry;
-    })
+    }).catch(err => handleError(err));
 }
 
-function getAlbumData(song){
-  let url = `https://api.musixmatch.com/ws/1.1/album.get?apikey=${process.env.MUSIXMATCH_API_KEY}&album_id&&f_music_genre_id=`;
+function getAlbumData(song){ //what will be used to obtain album art data + release date
+  let url = `https://api.musixmatch.com/ws/1.1/album.get?apikey=${process.env.MUSIXMATCH_API_KEY}&album_id=`;
   url += song.track.album_id;
-  url += song.track.music_genre_id;
 
-  return superagent.get(url + `&page_size=1` + `&f_music_genre_id`)
+  return superagent.get(url)
     .then(result => {
       let album = JSON.parse(result.text);
-      console.log(album);
-      let albumData = [album.message.body.track_list];
-      console.log(albumData);
-      console.log(album.message.body.albumData);
-      return albumData;
-    })
+      let art = ''; //art search term goes here
+      let releaseDate = album.message.body.album.album_release_date;
+      return [art, releaseDate];
+      // }
+    }).catch(err => handleError(err));
 }
 
 // Error handle
@@ -135,11 +130,13 @@ function Music(obj, artistCountry, albumData){
   this.artist = obj.artist_name;
   this.album = obj.album_name;
   this.song = obj.track_name;
-  this.genre = albumData;
+  this.genre = obj.primary_genres.music_genre_list[0] && obj.primary_genres.music_genre_list[0].music_genre.music_genre_name || '-'; //not all tracks have a genre listed in musixmatch
+  this.genre_id = obj.primary_genres.music_genre_list[0] && obj.primary_genres.music_genre_list[0].music_genre.music_genre_id || 0; //what gets input from musixmatch api - not rendered
   this.country = artistCountry;
-  this.album_image_url = albumData[0] || '/assets/nophoto.JPG';
-}
 
+  this.album_image_url = obj.album_art || '/assets/nophoto.JPG';
+  this.album_release_date = albumData[1] || '-';
+}
 
 // Localhost listener
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
