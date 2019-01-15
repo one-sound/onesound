@@ -56,8 +56,9 @@ function search(req, res) {
       const playList = [];
       let counter = 0;
       let musics = JSON.parse(result.text);
+      console.log(musics);
       let trackList = musics.message.body.track_list;
-
+debugger;
       trackList.forEach(song => {
         console.log(song.track.primary_genres.music_genre_list)
       })
@@ -83,6 +84,26 @@ function search(req, res) {
         })
       })
     }).catch(err => console.log(err));
+}
+
+// // Get By Id
+// function getById(song) { // using this function to match the genres for each artist 
+//   let url = `${baseURL}/${type}.get?format=json&apikey=${process.env.MUSIXMATCH_API_KEY}`;
+//   console.log(url);
+  
+//   if (type == 'genre') { url += `&f_music_genre_id=${id}`; }
+  
+//   return superagent.get(url)
+//     .then(result => {
+//       let musicGenre = JSON.parse(result.text);
+//       let searchGenre = musicGenre.message.body.genre.music_genre_list;
+//       return searchGenre; 
+//     }).catch(err => handleError(err));
+
+// }
+
+function renderPlaylist(playList, res){
+  res.render('pages/searches/show', {playList});
 }
 
 function getArtistCountry(song){
