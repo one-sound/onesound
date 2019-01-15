@@ -13,6 +13,7 @@ CREATE TABLE music (
  song VARCHAR(255),
  album VARCHAR(255),
  genre VARCHAR(255),
+ genre_id numeric(50),
  country TEXT,
  album_image_url VARCHAR(500)
 );

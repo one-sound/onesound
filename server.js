@@ -49,7 +49,7 @@ function search(req, res) {
   // Search Type Conditionals
   if (searchType === 'genre') {
     // [SEARCH BY ID FUNCTION GOES HERE]
-    // url += `&f_music_genre_id`;
+    url += `&f_music_genre_id=`;
   } else if(searchType === 'artist') {
     url += `&q_artist=${searchStr}`;
   } else if (searchType === 'title') {
@@ -91,7 +91,7 @@ function search(req, res) {
 }
 
 // Get By Id
-function getById(song) {
+function getById(song) { // using this function to match the genres for each artist 
   let url = `${baseURL}/${type}.get?format=json&apikey=${process.env.MUSIXMATCH_API_KEY}`;
   console.log(url);
   
