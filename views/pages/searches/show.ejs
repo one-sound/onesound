@@ -13,11 +13,18 @@
                         <h6><b>Album:</b> <%= song.album %></h6>
                         <h6><b>Genre:</b> <%= song.genre %></h6>
                         <h6><b>Country of Origin:</b> <%= song.country %></h6>
-
-                        <!-- <span>Album: <%= song.album %></span>
-                        <span>Genre: <%= song.genre %></span>
-                        <span>Country of Origin: <%= song.country %></span>
-                        <video src="<%= song.previewUrl %>"></video> -->
+                        
+                        <form action="/show" method="POST">
+                            <input type="hidden" value="<%= song.song %>" name="song">
+                            <input type="hidden" value="<%= song.artist %>" name="artist">
+                            <input type="hidden" value="<%= song.album %>" name="album">
+                            <input type="hidden" value="<%= song.genre %>" name="genre">
+                            <input type="hidden" value="<%= song.genre_id %>" name="genre_id">
+                            <input type="hidden" value="<%= song.country %>" name="country">
+                            <input type="hidden" value="<%= song.album_image_url %>" name="album_image_url">
+                            <input type="hidden" value="<%= song.album_release_date %>" name="album_release_date">
+                            <input id="add-butt" type="submit" value="Add">
+                        </form>
 
                     </li>
                 <% }); %>

@@ -26,6 +26,7 @@ app.set('view engine', 'ejs');
 app.get('/', home);
 app.get('/about', about);
 app.post('/searches', search);
+app.post('/show', addSong);
 
 //Function calls
 function home(req, res) {
@@ -120,6 +121,34 @@ function getAlbumData(song){ //what will be used to obtain album art data + rele
     }).catch(err => handleError(err));
 }
 
+// Database
+function addSong(req, res){
+  //takes in info from form and creates new object
+  let addedSong = new dbMusic(req.body);
+  let songs = Object.values(addedSong);
+  // songs.pop();
+
+  //adds to SQL
+  let SQL = `INSERT INTO music
+            (artist, song, album, genre, genre_id, country, album_image_url, album_release_date)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING id`;
+
+  // redirects to saved playlist view
+  client.query(SQL, songs)
+    .then(() => {
+      const selection = `SELECT * FROM music;`
+      client.query(selection)
+        .then(data => {
+          res.render('pages/lists/show', {playList: data.rows});
+        }).catch(err => handleError(err));
+    })
+    .catch(err => {
+      console.log(err);
+      res.render('pages/error', {err});
+    });
+}
+
 // Matching logic
 function musicMatcher(tracks){
   //takes in playlist of songs - goes through each and sees if it has a genre + release date + country of origin listed
@@ -164,7 +193,7 @@ function musicMatcher(tracks){
               console.log(list);
             }
           }).catch(err => handleError(err));
-        } 
+        }
       })
   }
 
@@ -197,6 +226,18 @@ function Music(obj, artistCountry, albumData){
 
   this.album_image_url = obj.album_art || '/assets/nophoto.JPG';
   this.album_release_date = albumData[1] || '-';
+}
+
+function dbMusic(obj){
+  this.artist = obj.artist;
+  this.album = obj.album;
+  this.song = obj.song;
+  this.genre = obj.genre;
+  this.genre_id = obj.genre_id; //what gets input from musixmatch api - not rendered
+  this.country = obj.country;
+
+  this.album_image_url = obj.album_image_url || '/assets/nophoto.JPG';
+  this.album_release_date = obj.album_release_date;
 }
 
 // Localhost listener
