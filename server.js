@@ -69,8 +69,9 @@ function search(req, res) {
       const playList = [];
       let counter = 0;
       let musics = JSON.parse(result.text);
+      console.log(musics);
       let trackList = musics.message.body.track_list;
-
+debugger;
       trackList.forEach(song => {
         const artistCountry = getArtistCountry(song); //needs to obtain artist country thru a separate API call
         artistCountry.then((result) => {
