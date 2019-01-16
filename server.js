@@ -35,7 +35,7 @@ app.get('/about', about);
 app.get('/saved', saved);
 app.post('/searches', search);
 app.post('/show', addSong);
-app.delete('/show/', deleteSong);
+app.delete('/show', deleteSong);
 //Function calls
 function home(req, res) {
   res.render('pages/index');
@@ -200,12 +200,12 @@ function addSong(req, res){
 }
 
 function deleteSong(req, res) {
-  console.log(`deleting the song ${req.body.song} and the ID is ${req.body.id}`);
+  console.log(`deleting the song ${req.body.song}`);
   client.query(`DELETE FROM music WHERE song=$1`, [req.body.song])
   // client.query(`DELETE FROM music WHERE `)
     .then(result => {
       console.log(result);
-      res.redirect('/show');
+      res.redirect('/saved');
     })
     .catch(err => {
       console.log('delete song error')
