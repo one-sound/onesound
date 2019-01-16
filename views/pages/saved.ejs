@@ -13,7 +13,9 @@
                 <h6><b>Album:</b> <%= song.album %></h6>
                 <h6><b>Genre:</b> <%= song.genre %></h6>
                 <h6><b>Country of Origin:</b> <%= song.country %></h6>
-
+                <form action="/saved/ method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="Remove from playlist">
             </li>
         <% }); %>
     </section>
