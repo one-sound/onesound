@@ -61,6 +61,20 @@ function search(req, res) {
     let genreID = fetchGenre(searchStr);
     genreID.then(result => {
       url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}&f_music_genre_id=${result}`;
+      // console.log(url)
+      superagent.get(url)
+      // request.post('/user')
+        // .set('Content-Type', 'application/json')
+        .then(result => {
+          const playList = [];
+          let counter = 0;
+          let musics = JSON.parse(result.text);
+          let trackList = musics.message.body.track_list;
+
+          trackList.forEach(song => {
+            // console.log(song.track.primary_genres.music_genre_list);
+          })
+        })
     });
   } else if(searchType === 'artist') {
     url += `&q_artist=${searchStr}`;
@@ -71,7 +85,7 @@ function search(req, res) {
   // Superagent Request
   superagent.get(url)
   // request.post('/user')
-    .set('Content-Type', 'application/json')
+    // .set('Content-Type', 'application/json')
     .then(result => {
       const playList = [];
       let counter = 0;
@@ -80,7 +94,7 @@ function search(req, res) {
       let trackList = musics.message.body.track_list;
       debugger;
       trackList.forEach(song => {
-        console.log(song.track.primary_genres.music_genre_list)
+        // console.log(song.track.primary_genres.music_genre_list);
       })
 
       trackList.forEach(song => {
@@ -237,45 +251,59 @@ function musicMatcher(tracks){
   //if it has a genre + release date listed, then searches for database based on genre (ex: pop)
 
   //+ lyrics language (randomized from a JSON file)
-  const countryData = require('./country-codes.json');
+
+  let urls = makeURL(songMatch, 50);
+  // console.log(urls)
+  let list = [];
   let counter = 0;
-  for (var i = 0; i < 10; i++){
-    const list = [];
-
-    let url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}&s_track_rating=desc&s_artist_rating=desc&f_music_genre_id=${songMatch.genre_id}&limit=10`;
-    let random = randomNumber(countryData);
-    // console.log(countryData[random].code)
-
-    url += `&f_lyrics_language=${countryData[random].code}`;
-    // console.log(url)
-
-    superagent.get(url)
-      .then(result => {
-        let parsedResult = JSON.parse(result.text);
+  Promise.all(urls[0].map(getter))
+    .then(result => {
+      for (var i in urls[0]){
+        let parsedResult = JSON.parse(result[i].text);
         let addedTrack = parsedResult.message.body.track_list[0];
+        // console.log(addedTrack);
 
-        if (addedTrack === undefined){//if doesn't produce valid result, then try again
-          // console.log('** INVALID RESPONSE. TRYING AGAIN');
-          i--;
-        } else if (addedTrack.track !== undefined){ //if it produces a valid result, then add the track to the playlist
-          // console.log('** adding new recommended track')
+        if (addedTrack === undefined){
+          console.log('** INVALID ');
+        } else if (addedTrack.track !== undefined){
           let albumData = getAlbumData(addedTrack.track);
           albumData.then(data => {
-            let newSong = new Music(addedTrack.track, countryData[random].name, data);
+            let newSong = new Music(addedTrack.track, urls[1][counter], data);
             list.push(newSong);
-            // console.log(newSong);
+            // console.log(newSong)
             counter++;
-            if (counter === 10){
-              // console.log(list);
+            console.log('** COUNTER ' + counter);
+            if (counter === 10) {
+              console.log(list)
             }
-          }).catch(err => handleError(err));
+          })
         }
-      })
-  }
+      }
+    })
+}
 
-  //picks first song, checks if album release date is within 5 years
-  //if yes - ADDS TO PLAYLIST
-  //repeat until playlist has 10 songs
+function makeURL(songMatch, qty){
+  let urls = [];
+  let languages = [];
+  const countryData = require('./country-codes.json');
+  for (var i = 0; i < qty; i++){
+    let url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}&s_track_rating=desc&s_artist_rating=desc&f_music_genre_id=${songMatch.genre_id}&limit=10`;
+
+    let random = randomNumber(countryData);
+    url += `&f_lyrics_language=${countryData[random].code}`;
+
+    urls.push(url);
+    languages.push(countryData[random].name);
+  }
+  return [urls, languages];
+}
+
+function getter(url){
+  return superagent.get(url)
+    .catch(err => {
+      handleError(err);
+      return null;
+    })
 }
 
 function randomNumber(countryData){
