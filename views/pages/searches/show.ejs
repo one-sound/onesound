@@ -15,9 +15,9 @@
                         <h6><b>Country of Origin:</b> <%= song.country %></h6>
                         
                         <form action="/show" method="POST">
-                            <input type="hidden" value="<%= song.song %>" name="song">
                             <input type="hidden" value="<%= song.artist %>" name="artist">
                             <input type="hidden" value="<%= song.album %>" name="album">
+                            <input type="hidden" value="<%= song.song %>" name="song">
                             <input type="hidden" value="<%= song.genre %>" name="genre">
                             <input type="hidden" value="<%= song.genre_id %>" name="genre_id">
                             <input type="hidden" value="<%= song.country %>" name="country">
