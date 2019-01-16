@@ -30,11 +30,24 @@ client.on('error', err => console.error(err));
 app.set('view engine', 'ejs');
 
 // Routes
-app.get('/', (req, res) => res.render('pages/index'));
-app.get('/about', (req, res) => res.render('pages/about'));
+app.get('/', home);
+app.get('/about', about);
+app.get('/saved', saved);
 app.post('/searches', search);
 app.post('/show', addSong);
-app.delete('/show/', deleteSong);
+app.delete('/show', deleteSong);
+//Function calls
+function home(req, res) {
+  res.render('pages/index');
+}
+function about(req, res) {
+  res.render('pages/about');
+}
+
+
+// var genre = music.genres.get;
+var baseURL = 'https://api.musixmatch.com/ws/1.1';
+
 // Search
 function search(req, res) {
   let searchStr = req.body.search[0];
@@ -65,7 +78,7 @@ function search(req, res) {
       let musics = JSON.parse(result.text);
       console.log(musics);
       let trackList = musics.message.body.track_list;
-debugger;
+      debugger;
       trackList.forEach(song => {
         console.log(song.track.primary_genres.music_genre_list)
       })
@@ -80,7 +93,7 @@ debugger;
             } else{
               playList.push(new Music(song.track, result, data));
             }
-            
+
             counter++;//makes sure that all of items in forEach has finished before rendering
 
             if (counter === trackList.length){ //makes sure that all of items in forEach has finished before rendering
@@ -93,25 +106,26 @@ debugger;
     }).catch(err => console.log(err));
 }
 
+
 // // Get By Id
-// function getById(song) { // using this function to match the genres for each artist 
+// function getById(song) { // using this function to match the genres for each artist
 //   let url = `${baseURL}/${type}.get?format=json&apikey=${process.env.MUSIXMATCH_API_KEY}`;
 //   console.log(url);
-  
+
 //   if (type == 'genre') { url += `&f_music_genre_id=${id}`; }
-  
+
 //   return superagent.get(url)
 //     .then(result => {
 //       let musicGenre = JSON.parse(result.text);
 //       let searchGenre = musicGenre.message.body.genre.music_genre_list;
-//       return searchGenre; 
+//       return searchGenre;
 //     }).catch(err => handleError(err));
 
 // }
 
-function renderPlaylist(playList, res){
-  res.render('pages/searches/show', {playList});
-}
+// function renderPlaylist(playList, res){
+//   res.render('pages/searches/show', {playList});
+// }
 
 function getArtistCountry(song){
   let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
@@ -174,7 +188,6 @@ function addSong(req, res){
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING id`;
 
-            
   // redirects to saved playlist view
   client.query(SQL, songs)
     .then(() => {
@@ -187,18 +200,31 @@ function addSong(req, res){
 }
 
 function deleteSong(req, res) {
-  console.log(`deleting the song ${req.body.song} and the ID is ${req.body.id}`);
+  console.log(`deleting the song ${req.body.song}`);
   client.query(`DELETE FROM music WHERE song=$1`, [req.body.song])
   // client.query(`DELETE FROM music WHERE `)
     .then(result => {
       console.log(result);
-      res.redirect('/show');
+      res.redirect('/saved');
     })
     .catch(err => {
       console.log('delete song error')
       return handleError(err, res);
     })
 }
+// Saved songs in Database
+function saved(req, res) {
+
+  const selection = `SELECT * FROM music;`
+  client.query(selection)
+    .then(data => {
+      res.render('pages/saved', {playList: data.rows});
+    }).catch(err => {
+      console.log(err);
+      res.render('pages/error', {err});
+    });
+}
+
 
 // Matching logic
 function musicMatcher(tracks){
