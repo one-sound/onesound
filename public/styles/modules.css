@@ -178,6 +178,7 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     
     /* playlist results */
     .playlist li{
+       
         list-style: none;
         clear: both;
         border: 1px solid lightgray;
@@ -186,7 +187,7 @@ header input[type="text"]:focus, header select:focus, header button:hover{
         margin-bottom: 20px;
         transition: 0.2s ease;
         opacity: 0.8;
-        border-radius: 10px;
+        border-radius: 10px; 
     }
     .playlist li img{
         float: left;

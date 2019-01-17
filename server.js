@@ -184,10 +184,16 @@ function fetchGenre(searchStr){
     });
 }
 
+// Sort songs/album alphabetically
+// When a user saves a song/album in the DB they when they go back to view their saved songs/album it should be sorted alphabetically
+ 
+//}
+
 // Database
 function addSong(req, res){
   //takes in info from form and creates new object
   let addedSong = new dbMusic(req.body);
+  console.log('THIS IS THE ADDED SONG AT THE START', addedSong)
   let songs = Object.values(addedSong);
   // songs.pop();
 
@@ -205,9 +211,9 @@ function addSong(req, res){
         .then(data => {
           res.render('pages/lists/show', {playList: data.rows});
         }).catch(err => handleError(err));
-    }).catch(err => handleError(err));
-}
+     }).catch(err => handleError(err));
 
+}
 function deleteSong(req, res) {
   console.log(`deleting the song ${req.body.song}`);
   client.query(`DELETE FROM music WHERE song=$1`, [req.body.song])
@@ -227,7 +233,27 @@ function saved(req, res) {
   const selection = `SELECT * FROM music;`
   client.query(selection)
     .then(data => {
-      res.render('pages/saved', {playList: data.rows});
+      const songData = data.rows;
+          console.log('this is the damn data', songData);
+          songData.sort((a, b) => {// Sorting by artist in the saved pages
+           if(a.artist < b.artist) return -1;
+           if(a.artist > b.artist) return 1;
+
+            return 0;
+          })
+          // const sortSongs = () => {
+          //   console.log('this is sortsongs',sortSongs);
+          //   songData.sort((a, b) => {
+          //     let sortSong = b.selection;
+          //     console.log('this is sortsong Moth##$#$#%',sortSong);
+          //     if(sortSong.toLowerCase() === searchStr.toLowerCase()) a.push
+          //     (b.selection) 
+          //   });
+          //   return a;
+          // }
+          // sortSongs();
+          console.log(songData); 
+      res.render('pages/saved', {playList: songData});
     }).catch(err => {
       console.log(err);
       res.render('pages/error', {err});

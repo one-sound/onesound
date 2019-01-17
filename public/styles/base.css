@@ -69,19 +69,21 @@ h5{
     }
     main{
         padding: 10px;
-    }
+    } 
     
      .how-to-search{
         /* display: flex;
         flex-flow: row;
-        justify-content: center; */
-        border: 5px solid #5ca8df;
-        padding: 5px;
+        justify-content: center;  */
+        width: 100%;
+        margin: 20px;
+        /* border: 5px solid #5ca8df; */
+        /* padding: 5px; */
     } 
     
     figure{
-        width: calc(50%/3 - 10px);
-        margin: 15px;
+        width: 90%;
+        margin: 15px 5%;
     }
     
     /* Text styling */
