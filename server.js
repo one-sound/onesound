@@ -61,32 +61,18 @@ function search(req, res) {
   if (searchType === 'genre') {
     let genreID = fetchGenre(searchStr);
     genreID.then(result => {
-      url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}&f_music_genre_id=${result}`;
-      // console.log(url)
-      superagent.get(url)
-      // request.post('/user')
-        // .set('Content-Type', 'application/json')
-        .then(result => {
-          const playList = [];
-          let counter = 0;
-          let musics = JSON.parse(result.text);
-          let trackList = musics.message.body.track_list;
-
-          trackList.forEach(song => {
-            // console.log(song.track.primary_genres.music_genre_list);
-          })
-        })
+      url += `&f_music_genre_id=${result}`;
+      console.log(url);
+      getComparisonSong(url, req, res, searchStr);
     });
   } else if(searchType === 'artist') {
     url += `&q_artist=${searchStr}`;
-  } else if (searchType === 'title') {
-    url += `&q_track=${searchStr}`;
+    getComparisonSong(url, req, res, searchStr);
   }
+}
 
-  // Superagent Request
+function getComparisonSong(url, req, res, searchStr){
   superagent.get(url)
-  // request.post('/user')
-    // .set('Content-Type', 'application/json')
     .then(result => {
       const playList = [];
       let counter = 0;
@@ -100,32 +86,29 @@ function search(req, res) {
       // })
 
       trackList.forEach(song => {
-        //console.log(trackList)
-        const artistCountry = getArtistCountry(song); //needs to obtain artist country thru a separate API call
+
+        const artistCountry = getArtistCountry(song); //needs to obtain artist country thru a separate API request
         artistCountry.then((result) => {
           let albumData = getAlbumData(song.track);
           albumData.then(data => {
-            console.log(song.track.album_name);
-            let albumCover = albumArt(song.track.artist_name);
-            albumCover.then(coverArt => {
-              if (coverArt == 'Error: JSON - 6 The artist you supplied could not be found'){
-                coverArt = '/assets/record.JPG';
-              }
-              if (coverArt == 'Error: No image found'){
-                coverArt = '/assets/record.JPG';
-              }
-              if (searchStr === 'genre'){
-                playList.push(new Music(song.track, result, data, coverArt, searchStr));
-              } else{
-                playList.push(new Music(song.track, result, data, coverArt));
-              }
-              counter++;//makes sure that all of items in forEach has finished before rendering
-              if (counter === trackList.length){ //makes sure that all of items in forEach has finished before rendering
-                res.render('pages/searches/show', {playList});
-                console.log(playList)
-                musicMatcher(playList);
-              }
-            })
+             let albumCover = albumArt(song.track.artist_name);
+              albumCover.then(coverArt => {
+                if (coverArt == 'Error: JSON - 6 The artist you supplied could not be found'){
+                  coverArt = '/assets/record.JPG';
+                }
+                if (coverArt == 'Error: No image found'){
+                  coverArt = '/assets/record.JPG';
+                }
+            if (searchStr === 'genre'){
+              playList.push(new Music(song.track, result, data, searchStr));
+            } else{
+              playList.push(new Music(song.track, result, data));
+            }
+            counter++;//makes sure that all of items in forEach has finished before rendering
+
+            if (counter === trackList.length){ //makes sure that all of items in forEach has finished before rendering
+              musicMatcher(playList, res);
+            }
           })
         })
       })
@@ -253,40 +236,37 @@ function saved(req, res) {
 
 
 // Matching logic
-function musicMatcher(tracks){
+function musicMatcher(tracks, res){
   //takes in playlist of songs - goes through each and sees if it has a genre + release date + country of origin listed
   //picks first song
   let songMatch = tracks.filter(song => {
     if (song.country && song.genre && song.genre !== '-') return song;
   })[0];
 
-  //if it has a genre + release date listed, then searches for database based on genre (ex: pop)
-
-  //+ lyrics language (randomized from a JSON file)
-
   let urls = makeURL(songMatch, 50);
   // console.log(urls)
   let list = [];
-  let counter = 0;
-  Promise.all(urls[0].map(getter))
+  
+  Promise.all(urls.map(getter))
     .then(result => {
-      for (var i in urls[0]){
+      for (var i in urls){
         let parsedResult = JSON.parse(result[i].text);
         let addedTrack = parsedResult.message.body.track_list[0];
         // console.log(addedTrack);
 
         if (addedTrack === undefined){
-          //console.log('** INVALID ');
+          console.log('** INVALID');
         } else if (addedTrack.track !== undefined){
+          // console.log('** ' + i + ' ' + addedTrack.track.artist_name + ' ' + urls[i][1])
+          let language = urls[i][1];
+          // console.log(urls[i][])
           let albumData = getAlbumData(addedTrack.track);
           albumData.then(data => {
-            let newSong = new Music(addedTrack.track, urls[1][counter], data);
+            let newSong = new Music(addedTrack.track, language, data);
             list.push(newSong);
-            // console.log(newSong)
-            counter++;
-            //console.log('** COUNTER ' + counter);
-            if (counter === 10) {
-              console.log(list)
+            if (list.length === 10){
+              console.log('** COMPLETE')
+              res.render('pages/searches/show', {playList: list});
             }
           })
         }
@@ -295,8 +275,7 @@ function musicMatcher(tracks){
 }
 
 function makeURL(songMatch, qty){
-  let urls = [];
-  let languages = [];
+  let content = [];
   const countryData = require('./country-codes.json');
   for (var i = 0; i < qty; i++){
     let url = `https://api.musixmatch.com/ws/1.1/track.search?apikey=${process.env.MUSIXMATCH_API_KEY}&s_track_rating=desc&s_artist_rating=desc&f_music_genre_id=${songMatch.genre_id}&limit=10`;
@@ -304,14 +283,13 @@ function makeURL(songMatch, qty){
     let random = randomNumber(countryData);
     url += `&f_lyrics_language=${countryData[random].code}`;
 
-    urls.push(url);
-    languages.push(countryData[random].name);
+    content.push([url, countryData[random].name]);
   }
-  return [urls, languages];
+  return content;
 }
 
 function getter(url){
-  return superagent.get(url)
+  return superagent.get(url[0])
     .catch(err => {
       handleError(err);
       return null;
