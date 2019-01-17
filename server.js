@@ -72,6 +72,7 @@ function search(req, res) {
 }
 
 function getComparisonSong(url, req, res, searchStr){
+
   superagent.get(url)
     .then(result => {
       const playList = [];
@@ -112,9 +113,13 @@ function getComparisonSong(url, req, res, searchStr){
           })
         })
       })
-
+    
     }).catch(err => console.log(err));
+})
 }
+
+
+
 
 // // Get By Id
 // function getById(song) { // using this function to match the genres for each artist
