@@ -92,54 +92,30 @@ function getComparisonSong(url, req, res, searchStr){
         artistCountry.then((result) => {
           let albumData = getAlbumData(song.track);
           albumData.then(data => {
-             let albumCover = albumArt(song.track.artist_name);
-              albumCover.then(coverArt => {
-                if (coverArt == 'Error: JSON - 6 The artist you supplied could not be found'){
-                  coverArt = '/assets/record.JPG';
-                }
-                if (coverArt == 'Error: No image found'){
-                  coverArt = '/assets/record.JPG';
-                }
-            if (searchStr === 'genre'){
-              playList.push(new Music(song.track, result, data, searchStr));
-            } else{
-              playList.push(new Music(song.track, result, data));
-            }
-            counter++;//makes sure that all of items in forEach has finished before rendering
+            let albumCover = albumArt(song.track.artist_name);
+            albumCover.then(coverArt => {
+              if (coverArt == 'Error: JSON - 6 The artist you supplied could not be found'){
+                coverArt = '/assets/record.JPG';
+              }
+              if (coverArt == 'Error: No image found'){
+                coverArt = '/assets/record.JPG';
+              }
+              if (searchStr === 'genre'){
+                playList.push(new Music(song.track, result, data, searchStr));
+              } else{
+                playList.push(new Music(song.track, result, data));
+              }
+              counter++;//makes sure that all of items in forEach has finished before rendering
 
-            if (counter === trackList.length){ //makes sure that all of items in forEach has finished before rendering
-              musicMatcher(playList, res);
-            }
+              if (counter === trackList.length){ //makes sure that all of items in forEach has finished before rendering
+                musicMatcher(playList, res);
+              }
+            })
           })
         })
-      })
-    
-    }).catch(err => console.log(err));
-})
+      }).catch(err => console.log(err));
+    })
 }
-
-
-
-
-// // Get By Id
-// function getById(song) { // using this function to match the genres for each artist
-//   let url = `${baseURL}/${type}.get?format=json&apikey=${process.env.MUSIXMATCH_API_KEY}`;
-//   console.log(url);
-
-//   if (type == 'genre') { url += `&f_music_genre_id=${id}`; }
-
-//   return superagent.get(url)
-//     .then(result => {
-//       let musicGenre = JSON.parse(result.text);
-//       let searchGenre = musicGenre.message.body.genre.music_genre_list;
-//       return searchGenre;
-//     }).catch(err => handleError(err));
-
-// }
-
-// function renderPlaylist(playList, res){
-//   res.render('pages/searches/show', {playList});
-// }
 
 function getArtistCountry(song){
   let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
@@ -191,7 +167,7 @@ function fetchGenre(searchStr){
 
 // Sort songs/album alphabetically
 // When a user saves a song/album in the DB they when they go back to view their saved songs/album it should be sorted alphabetically
- 
+
 //}
 
 // Database
@@ -216,7 +192,7 @@ function addSong(req, res){
         .then(data => {
           res.render('pages/lists/show', {playList: data.rows});
         }).catch(err => handleError(err));
-     }).catch(err => handleError(err));
+    }).catch(err => handleError(err));
 
 }
 function deleteSong(req, res) {
@@ -239,25 +215,25 @@ function saved(req, res) {
   client.query(selection)
     .then(data => {
       const songData = data.rows;
-          console.log('this is the damn data', songData);
-          songData.sort((a, b) => {// Sorting by artist in the saved pages
-           if(a.artist < b.artist) return -1;
-           if(a.artist > b.artist) return 1;
+      console.log('this is the damn data', songData);
+      songData.sort((a, b) => {// Sorting by artist in the saved pages
+        if(a.artist < b.artist) return -1;
+        if(a.artist > b.artist) return 1;
 
-            return 0;
-          })
-          // const sortSongs = () => {
-          //   console.log('this is sortsongs',sortSongs);
-          //   songData.sort((a, b) => {
-          //     let sortSong = b.selection;
-          //     console.log('this is sortsong Moth##$#$#%',sortSong);
-          //     if(sortSong.toLowerCase() === searchStr.toLowerCase()) a.push
-          //     (b.selection) 
-          //   });
-          //   return a;
-          // }
-          // sortSongs();
-          console.log(songData); 
+        return 0;
+      })
+      // const sortSongs = () => {
+      //   console.log('this is sortsongs',sortSongs);
+      //   songData.sort((a, b) => {
+      //     let sortSong = b.selection;
+      //     console.log('this is sortsong Moth##$#$#%',sortSong);
+      //     if(sortSong.toLowerCase() === searchStr.toLowerCase()) a.push
+      //     (b.selection)
+      //   });
+      //   return a;
+      // }
+      // sortSongs();
+      console.log(songData);
       res.render('pages/saved', {playList: songData});
     }).catch(err => {
       console.log(err);
@@ -277,7 +253,7 @@ function musicMatcher(tracks, res){
   let urls = makeURL(songMatch, 50);
   // console.log(urls)
   let list = [];
-  
+
   Promise.all(urls.map(getter))
     .then(result => {
       for (var i in urls){
@@ -347,7 +323,7 @@ function Music(obj, artistCountry, albumData, coverArt, searchedGenre){
   this.genre_id = obj.primary_genres.music_genre_list[0] && obj.primary_genres.music_genre_list[0].music_genre.music_genre_id || 0; //what gets input from musixmatch api - not rendered
   this.country = artistCountry;
 
-  this.album_image_url = coverArt || '/assets/nophoto.JPG';
+  this.album_image_url = coverArt || '/assets/record.JPG';
   this.album_release_date = albumData[1] || '-';
 }
 
@@ -359,7 +335,7 @@ function dbMusic(obj, coverArt){
   this.genre_id = obj.genre_id; //what gets input from musixmatch api - not rendered
   this.country = obj.country;
 
-  this.album_image_url = coverArt || '/assets/nophoto.JPG';
+  this.album_image_url = coverArt || '/assets/record.JPG';
   this.album_release_date = obj.album_release_date;
 }
 
