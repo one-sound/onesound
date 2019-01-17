@@ -27,6 +27,7 @@ main{
 figure{
     width: calc(100%/3 - 10px);
     margin: 15px;
+    
 }
 
 
@@ -51,4 +52,64 @@ h3{
 }
 h5{
     font-size: 14pt;
+}
+
+#add-butt {
+    width: 60px;
+    background-color: rgb(13, 116, 184);
+}
+
+/* Mobile view */
+
+@media screen and (max-width: 480px){
+    body{
+        font-family: Barlow, Arial, sans-serif;
+        margin: 0;
+       
+    }
+    main{
+        padding: 10px;
+    }
+    
+     .how-to-search{
+        /* display: flex;
+        flex-flow: row;
+        justify-content: center; */
+        border: 5px solid #5ca8df;
+        padding: 5px;
+    } 
+    
+    figure{
+        width: calc(50%/3 - 10px);
+        margin: 15px;
+    }
+    
+    /* Text styling */
+    h1, h2{
+        font-family: Timmana, Arial, Helvetica, sans-serif;
+    }
+    h1{
+        font-size: 42pt;
+        color: white;
+        text-shadow: 3px 3px #5ca8df;
+    }
+    h2{
+        font-size: 12pt;
+        margin-top: 15px;
+        text-align: center;
+    }
+    h3{
+        font-size: 16pt;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    h5{
+        font-size: 7pt;
+    }
+    
+    #add-butt {
+        width: 30px;
+        background-color: rgb(13, 116, 184);
+    }
+    
 }

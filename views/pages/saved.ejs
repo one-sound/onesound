@@ -1,0 +1,32 @@
+<%- include('../layout/head.ejs') %>
+<body>
+  <%- include('../layout/header.ejs') %>
+  <main>
+    <h2>Your Saved Playlist</h2>
+    <section class="playlist">
+        <% playList.forEach(song => { %>
+            <li>
+                <img src="<%= song.album_image_url %>">
+                <h3><%= song.song %></h3>
+                <h5><%= song.artist %></h5>
+
+                <h6><b>Album:</b> <%= song.album %></h6>
+                <h6><b>Genre:</b> <%= song.genre %></h6>
+                <h6><b>Country of Origin:</b> <%= song.country %></h6>
+                <form action="/show" method="POST">
+                    <input type="hidden" value="<%= song.artist %>" name="artist">
+                    <input type="hidden" value="<%= song.album %>" name="album">
+                    <input type="hidden" value="<%= song.song %>" name="song">
+                    <input type="hidden" value="<%= song.genre %>" name="genre">
+                    <input type="hidden" value="<%= song.genre_id %>" name="genre_id">
+                    <input type="hidden" value="<%= song.country %>" name="country">
+                    <input type="hidden" value="<%= song.album_image_url %>" name="album_image_url">
+                    <input type="hidden" value="<%= song.album_release_date %>" name="album_release_date">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Remove from playlist</button>
+                </form>
+        <% }); %>
+    </section>
+</main>
+<%- include('../layout/footer.ejs') %>
+</body>
