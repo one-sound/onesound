@@ -72,6 +72,7 @@ function search(req, res) {
 }
 
 function getComparisonSong(url, req, res, searchStr){
+
   superagent.get(url)
     .then(result => {
       const playList = [];
@@ -112,30 +113,9 @@ function getComparisonSong(url, req, res, searchStr){
             })
           })
         })
-
       }).catch(err => console.log(err));
     })
 }
-
-// // Get By Id
-// function getById(song) { // using this function to match the genres for each artist
-//   let url = `${baseURL}/${type}.get?format=json&apikey=${process.env.MUSIXMATCH_API_KEY}`;
-//   console.log(url);
-
-//   if (type == 'genre') { url += `&f_music_genre_id=${id}`; }
-
-//   return superagent.get(url)
-//     .then(result => {
-//       let musicGenre = JSON.parse(result.text);
-//       let searchGenre = musicGenre.message.body.genre.music_genre_list;
-//       return searchGenre;
-//     }).catch(err => handleError(err));
-
-// }
-
-// function renderPlaylist(playList, res){
-//   res.render('pages/searches/show', {playList});
-// }
 
 function getArtistCountry(song){
   let url = `https://api.musixmatch.com/ws/1.1/artist.get?apikey=${process.env.MUSIXMATCH_API_KEY}&artist_id=`;
