@@ -1,21 +1,36 @@
 <%- include('../layout/head.ejs') %>
     <body>
         <%- include('../layout/header.ejs') %>
+        <header class="about-us">
+            <div class="header-content">
+                <h1>OneSound</h1>
+                <h3>a global music generator</h3>
+                <form action="/searches" method="post">
+                    <input type="text" name="search" placeholder="Search for an artist, song title, or genre" required>
+                    <select name="search" required>
+                        <option value="artist">Artist</option>
+                        <option value="genre">Genre</option>
+                    </select>
+                    <button type="submit">Search</button> 
+                </form>
+            </div>
+        </header>
         <main>
             <h2>About the Team</h2>
             <section class="about">
                 <figure>
-                    <img src="https://via.placeholder.com/120x200">
+                    <img src="./assets/liana.jpg">
                     <h3>H'Liana</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+                    <p>As a first generation Asian American, learning cultures is important to me. To me, music is a prominent window into a culture.</p>
+                    <b>Recommended Track:</b> X Japan - Tears
                 </figure>
                 <figure>
-                    <img src="https://via.placeholder.com/120x200">
+                    <img src="./assets/jared.jpg">
                     <h3>Jared</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                 </figure>
                 <figure>
-                    <img src="https://via.placeholder.com/120x200">
+                    <img src="./assets/jerome.jpg">
                     <h3>Jerome</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                 </figure>

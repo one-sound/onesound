@@ -16,20 +16,14 @@ main{
     padding: 20px;
 }
 
-.how-to-search{
-    display: flex;
-    flex-flow: row;
-    justify-content: center;
-    border: 5px solid #5ca8df;
-    padding: 15px;
-}
-
 figure{
     width: calc(100%/3 - 10px);
     margin: 15px;
     
 }
-
+p{
+    margin: 20px 0;
+}
 
 
 /* Text styling */
@@ -39,7 +33,7 @@ h1, h2{
 h1{
     font-size: 84pt;
     color: white;
-    text-shadow: 3px 3px #5ca8df;
+    text-shadow: 3px 3px #0a3c52;
 }
 h2{
     font-size: 24pt;
@@ -49,6 +43,12 @@ h3{
     font-size: 16pt;
     font-weight: bold;
     margin-bottom: 15px;
+}
+h4{
+    font-family: Timmana, Arial, Helvetica, sans-serif;
+    display: inline;
+    color: white;
+    font-size: 24pt;
 }
 h5{
     font-size: 14pt;
@@ -70,17 +70,7 @@ h5{
     main{
         padding: 10px;
     } 
-    
-     .how-to-search{
-        /* display: flex;
-        flex-flow: row;
-        justify-content: center;  */
-        width: 100%;
-        margin: 20px;
-        /* border: 5px solid #5ca8df; */
-        /* padding: 5px; */
-    } 
-    
+        
     figure{
         width: 90%;
         margin: 15px 5%;
@@ -93,7 +83,7 @@ h5{
     h1{
         font-size: 42pt;
         color: white;
-        text-shadow: 3px 3px #5ca8df;
+        text-shadow: 3px 3px #0a3c52;
     }
     h2{
         font-size: 12pt;
