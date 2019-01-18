@@ -12,7 +12,7 @@
 
                         <h6><b>Album:</b> <%= song.album %></h6>
                         <h6><b>Genre:</b> <%= song.genre %></h6>
-                        <h6><b>Country of Origin:</b> <%= song.country %></h6>
+                        <h6><b>Country/Language of Origin:</b> <a href="https://en.wikipedia.org/wiki/<%= song.country %>"><%= song.country %></a></h6>
                         <form action="/show" method="POST">
                             <input type="hidden" value="<%= song.artist %>" name="artist">
                             <input type="hidden" value="<%= song.album %>" name="album">
