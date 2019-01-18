@@ -1,55 +1,59 @@
 <%- include('../layout/head.ejs') %>
     <body>
         <%- include('../layout/header.ejs') %>
+        <header class="main">
+            <div class="header-content">
+                <h1>OneSound</h1>
+                <h3>a global music generator</h3>
+                <form action="/searches" method="post">
+                    <input type="text" name="search" placeholder="Search for an artist, song title, or genre" required>
+                    <select name="search" required>
+                        <option value="artist">Artist</option>
+                        <option value="genre">Genre</option>
+                    </select>
+                    <button type="submit">Search</button> 
+                </form>
+            </div>
+        </header>
         <main>
             <section class="intro">
-                OneSound aims to unite people of all cultures through the love of music. Users will select a genre of music or an artist they feel like listening to, and a playlist of songs from diverse cultures and languages will be generated. The world is vast, but we believe music is a universal language that can bring us all a little closer together.
+                OneSound aims to unite people of all cultures through the love of music. Users will select a genre of music or an artist they feel like listening to, and a playlist of recommended songs from diverse cultures and languages will be generated. The world is vast, but we believe music is a universal language that can bring us all a little closer together.
             </section>
 
-            <h2>How does it work?</h2>
-            <section class="how-to-search">
-                
-                <figure>
-                    <h3>Artist</h3>
-                    <img src="https://via.placeholder.com/150">
-                    <p>Search by artist to generate a playlist of similar artists from different countries around the world! Not sure where to start? Here are some examples below:</p>
-                    <ul>
-                        <li>Meek Mill</li>
-                        <li>Animal Collective</li>
-                        <li>Bush</li>
-                        <li>Youssou Ndour</li>
-                        <li>Odezsa</li>
-                        <li>Backstreet Boys</li>
-                    </ul>
-                </figure>
-                <figure>
-                    <h3>Song Title</h3>
-                    <img src="https://via.placeholder.com/150">
-                    <p>Search by song title to generate a playlist of songs from around the world with the same title! Not sure where to start? Here are some examples of key words:</p>
-                    <ul>
-                        <li>Reflections</li>
-                        <li>Animals</li>
-                        <li>Love</li>
-                        <li>Boyfriend</li>
-                        <li>Forever</li>
-                        <li>Promise</li>
-                    </ul>
-                </figure>
-                <figure>
-                    <h3>Genre</h3>
-                    <img src="https://via.placeholder.com/150">
-                    <p>Search by genre to generate a playlist of songs from around the world with a similar genre! Not sure where to start? Here are some examples of key words:</p>
-                    <ul>
-                        <li>Pop</li>
-                        <li>Rock</li>
-                        <li>EDM</li>
-                        <li>Rap</li>
-                        <li>Jazz</li>
-                        <li>Afro Beats</li>
-                    </ul>
-                </figure>
-            </section>
+        
         </main>
+        
+            <section class="how-to-search">
+                <div>
+                    <h2>How does it work?</h2>
+                    <figure>
+                        <h3>Artist</h3>
+                        <img src="./assets/microphone.png">
+                        <p>Search by artist to generate a playlist of similar artists from different countries around the world! Not sure where to start? Here are some examples below:</p>
+                        <ul>
+                            <li>Meek Mill</li>
+                            <li>Animal Collective</li>
+                            <li>Bush</li>
+                            <li>Youssou Ndour</li>
+                            <li>Odezsa</li>
+                            <li>Backstreet Boys</li>
+                        </ul>
+                    </figure>
+                    <figure>
+                        <h3>Genre</h3>
+                        <img src="./assets/dj.png">
+                        <p>Search by genre to generate a playlist of songs from around the world with a similar genre! Not sure where to start? Here are some examples of key words:</p>
+                        <ul>
+                            <li>Pop</li>
+                            <li>Rock</li>
+                            <li>EDM</li>
+                            <li>Rap</li>
+                            <li>Jazz</li>
+                            <li>Afro Beats</li>
+                        </ul>
+                    </figure>
+                </div>
+            </section>
         <%- include('../layout/footer.ejs') %>
     </body>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
