@@ -12,7 +12,7 @@ nav{
     position: fixed;
     z-index: 100;
 }
-nav ul li{
+/* nav ul li{
     list-style: none;
     display: inline;
     margin-right: 20px;
@@ -31,7 +31,106 @@ nav a{
     color: white;
     font-size: 14pt;
     text-decoration: none;
+    color: #232323;
+    transition: color 0.3s ease;
 }
+
+nav a:hover {
+    color: tomato;
+}
+
+#menu-toggle{
+    display: block;
+    position: relative;
+    top: -5px;
+    left: 10px;
+
+    z-index: 1;
+
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#menu-toggle input {
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    top: -7px;
+    left: -5px;
+
+    cursor: pointer;
+    opacity: 0; /* hide this */
+    z-index: 2; /* and place it over the hamburger */
+
+    -webkit-touch-callout: none; /* safari 4 */
+}
+
+#menu-toggle span {
+    display: block;
+    width: 33px;
+    height: 4px;
+    margin-bottom: 5px;
+    position: relative;
+
+    background: #cdcdcd;
+    border-radius: 3px;
+
+    z-index: 1;
+    transform-origin: 4px 0px;
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), background 0.5s cubic-bezier(0.77,0.2,0.05,1.0), opacity 0.55s ease;
+}
+
+#menu-toggle span:first-child {
+    transform-origin: 0% 100%;
+}
+
+/* Transform all the slices of hamburger into a crossmark */
+#menu-toggle input:checked ~ span {
+    opacity: 1;
+    transform: rotate(45deg) translate(-2px, -1px);
+    background: #232323;
+}
+
+/* Hide the middle one. */
+#menu-toggle input:checked ~ span:nth-last-child(3) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/* The last one should go the other way */
+#menu-toggle input:checked ~ span:nth-last-child(2) {
+    transform: rotate(-45deg) translate(0, -1px);
+}
+
+/* Make this absolute positioned at the top left of the screen */
+#menu {
+    position: absolute;
+    width: 300px;
+    margin: -100px 0 0 -50px;
+    padding: 50px;
+    padding-top: 125px;
+
+    background: #ededed;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+
+    transform-origin: 0% 0%;
+    transform: translate(-100%, 0);
+
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu li {
+    padding: 10px 0;
+    font-size: 22px;
+}
+
+/* Slide it in */
+#menu-toggle input:checked ~ ul {
+    transform: none;
+}
+
 nav form, nav input, nav select{
     display: inline;
 }
@@ -111,7 +210,34 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     height: 200px;
 }
 
+/* div:nth-child(even){background:#ff0000;color:#fff;}
+.fade-ani{opacity:0;position:relative;}
+.fade-up{bottom:-50px;}
+.fade-down{top:-50px;}
+.fade-left{left:-50px;}
+.fade-right{right:-50px;}
+
+.fade-ani.showing{}
+.fade-in.showing{opacity:1;}
+.fade-up.showing{bottom:0px;opacity:1;}
+.fade-down.showing{top:-0px;opacity:1;}
+.fade-left.showing{left:-0px;opacity:1;}
+.fade-right.showing{right:-0px;opacity:1;} */
+
 /* playlist results */
+
+.fade-ani.showing{}
+.fade-up.showing{
+    opacity: 1;
+}
+.fade-up.showing{
+    bottom: 0px;
+    opacity: 1;
+}
+.fade-down.showing{
+    top: -0px;
+    opacity: 1;
+}
 .playlist li{
     list-style: none;
     clear: both;
@@ -119,10 +245,30 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     padding: 15px;
     min-height: 180px;
     margin-bottom: 20px;
-    transition: 0.2s ease;
+    transition: all ease-out 0.5s 0s;
     opacity: 0.8;
     border-radius: 10px;
 }
+
+.playlist li:nth-child(even){
+    background: #5ca8df;
+     color: #030303;
+} 
+
+.fade-ani{
+    opacity: 0;
+    position: relative;
+}
+.fade-up{
+    bottom: -5px;
+}
+.fade-down{
+    bottom: -5px;
+}
+
+
+
+
 .playlist li img{
     float: left;
     margin-right: 20px;
@@ -154,10 +300,10 @@ header input[type="text"]:focus, header select:focus, header button:hover{
         justify-content: space-between;
         align-content: center;
     }
-    nav ul li{
+    /* nav ul li{
         list-style: none;
         display: inline;
-    }
+    } */
     nav a{
         text-decoration: none;
     }
@@ -174,7 +320,7 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     }
     header input{
         padding: 10px;
-        width: 250px;
+        width: 150px;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         border-right: 1px solid lightgray;
@@ -197,6 +343,7 @@ header input[type="text"]:focus, header select:focus, header button:hover{
         transition: 0.3s;
         border: none;
         outline: none;
+        /* width: 60%; */
     }
     
     /* about page */

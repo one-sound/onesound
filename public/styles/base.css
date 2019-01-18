@@ -70,7 +70,16 @@ h5{
     main{
         padding: 10px;
     } 
-        
+    
+    .how-to-search{
+        display: inline-block; 
+        /* width: 90%; */
+        margin: 10px 5%;
+        padding: 10px; 
+        /* border: 5px solid #5ca8df;  */
+        /* padding: 5px;  */
+    } 
+    
     figure{
         width: 90%;
         margin: 15px 5%;
