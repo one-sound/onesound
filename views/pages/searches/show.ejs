@@ -3,7 +3,7 @@
         <%- include('../../layout/header.ejs') %>
         <main>
             <h2>Your Customized Playlist</h2>
-            <section class="playlist">
+            <section class="playlist fade-down fade-ani fade-up">
                 <% playList.forEach(song => { %>
                     <li>
                         <img src="<%= song.album_image_url %>">

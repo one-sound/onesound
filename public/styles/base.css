@@ -71,14 +71,13 @@ h5{
         padding: 10px;
     } 
     
-     .how-to-search{
-        /* display: flex;
-        flex-flow: row;
-        justify-content: center;  */
-        width: 100%;
-        margin: 20px;
-        /* border: 5px solid #5ca8df; */
-        /* padding: 5px; */
+    .how-to-search{
+        display: inline-block; 
+        /* width: 90%; */
+        margin: 10px 5%;
+        padding: 10px; 
+        /* border: 5px solid #5ca8df;  */
+        /* padding: 5px;  */
     } 
     
     figure{
