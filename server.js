@@ -77,8 +77,7 @@ function getComparisonSong(url, req, res, searchStr){
       let musics = JSON.parse(result.text);
       console.log(musics);
       let trackList = musics.message.body.track_list;
-      //console.log(trackList)
-      debugger;
+      console.log(trackList)
       // trackList.forEach(song => {
       //   // console.log(song.track.primary_genres.music_genre_list);
       // })

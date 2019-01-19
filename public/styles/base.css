@@ -41,6 +41,11 @@ h3{
     font-weight: bold;
     margin: 15px 0;
 }
+.how-to-search h3{
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+}
 h4{
     font-family: Timmana, Arial, Helvetica, sans-serif;
     display: inline;
