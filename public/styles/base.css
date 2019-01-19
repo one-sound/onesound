@@ -58,11 +58,12 @@ h5{
 
 #add-butt {
     width: 60px;
-    background-color: rgb(13, 116, 184);
+    background-color: #e02c7d;
     border-radius: 10px;
     padding: 3px;
     margin: 3px;
-}
+        
+    }
 
 .remove {
     width: 40;
@@ -83,38 +84,25 @@ h5{
         padding: 10px;
     } 
 
-    
-    .how-to-search{
-        display: inline-block; 
-        margin: 5px 0px 5%;
-        padding: 5px; 
-    } 
-    
-    figure{
-        width: 90%;
-        margin: 15px 5%;
-
-
-    section{
+    section {
         padding: 15px;
     }
 
-    .about{
+    .about {
         margin: 10px;
         padding: 15px;
     }
 
-    .about figure{
+    .about figure {
         height: 100%;
         display: flex;
         flex-direction: column;
         align-content: center;
     }
 
-    .about figure img{
+    .about figure img {
         display: block;
         align-self: center;
-
     }
     
     /* Text styling */
@@ -124,7 +112,6 @@ h5{
         overflow: hidden;
     }
     
-
     h1, h2{
         font-family: Timmana, Arial, Helvetica, sans-serif;
     }
@@ -151,11 +138,11 @@ h5{
     }
     
     #add-butt {
-        width: 10px;
-        background-color: rgb(13, 116, 184);
-
-        font-size: 14pt;
-
+    width: 60px;
+    background-color: #e02c7d;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 3px;
     }
         
 }
