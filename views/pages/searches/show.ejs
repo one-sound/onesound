@@ -11,17 +11,17 @@
                         <option value="artist">Artist</option>
                         <option value="genre">Genre</option>
                     </select>
-                    <button type="submit">Search</button> 
+                    <button id="animate-btn" type="submit">Search</button> 
                 </form>
             </div>
         </header>
         <main>
             <h2>Your Customized Playlist</h2>
-            <section class="playlist fade-down fade-ani fade-up">
+            <section class="playlist">
                 <% playList.forEach(song => { %>
-                    <li>
+                    <li class="fadeInUp delay-0s  fade-in fade-ani fade-up fade-ani fade-down fade-ani fade-left fade-ani fade-in fade-ani">
                         <%- include('../detail.ejs', {song: song}) %>
-                            <input id="add-butt" type="submit" value="Add">
+                            <input id="add-butt"  type="submit" value="Add">
                         </form>
                     </li>
                 <% }); %>

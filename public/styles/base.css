@@ -23,6 +23,8 @@ figure{
 }
 p{
     margin: 20px 0;
+    text-align: justify;
+    font-family: 'Shadows Into Light', cursive;
 }
 
 
@@ -57,6 +59,20 @@ h5{
 #add-butt {
     width: 60px;
     background-color: rgb(13, 116, 184);
+    border-radius: 10px;
+    padding: 3px;
+    margin: 3px;
+    animation-duration: 3s;
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+}
+
+.remove {
+    width: 40;
+    background-color: #c0c0c0;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 3px;
 }
 
 /* Mobile view */
@@ -73,11 +89,8 @@ h5{
     
     .how-to-search{
         display: inline-block; 
-        /* width: 90%; */
-        margin: 10px 5%;
-        padding: 10px; 
-        /* border: 5px solid #5ca8df;  */
-        /* padding: 5px;  */
+        margin: 5px 0px 5%;
+        padding: 5px; 
     } 
     
     figure{
@@ -86,6 +99,13 @@ h5{
     }
     
     /* Text styling */
+    p{
+        margin: 5px;
+        text-align: justify;
+        overflow: hidden;
+    }
+    
+
     h1, h2{
         font-family: Timmana, Arial, Helvetica, sans-serif;
     }
@@ -97,7 +117,7 @@ h5{
     h2{
         font-size: 12pt;
         margin-top: 15px;
-        text-align: center;
+        text-align: justify;
     }
     h3{
         font-size: 16pt;
@@ -109,7 +129,7 @@ h5{
     }
     
     #add-butt {
-        width: 30px;
+        width: 10px;
         background-color: rgb(13, 116, 184);
     }
     

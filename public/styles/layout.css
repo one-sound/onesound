@@ -6,7 +6,6 @@ header{
     color: white;
     width: 100%;
     height: 550px;
-    /* background: linear-gradient(180deg, rgba(197,70,100,1) 0%, rgba(13,1,117,1) 100%);  */
 }
 .header-content{
     text-align: center;
@@ -113,21 +112,9 @@ header{
     /* background: linear-gradient(180deg, rgba(197,70,100,1) 0%, rgba(13,1,117,1) 100%);  */
 }
 
-.burger-nav {
-    display: block;
-    height: 40px;
-    width: 100%;
-    background: url('../assets/burger.png') no repeat 98% center;
-    background-color: #fcf5f5;
 
-}
 
 .header-content{
-    /* text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center; */
     width: 100%;
     margin: 20px;
 }
