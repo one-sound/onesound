@@ -109,8 +109,8 @@ function getComparisonSong(url, req, res, searchStr){
               }
             })
           })
+        }).catch(err => handleError(err));
         })
-      }).catch(err => console.log(err));
     })
 }
 
@@ -162,11 +162,6 @@ function fetchGenre(searchStr){
     });
 }
 
-// Sort songs/album alphabetically
-// When a user saves a song/album in the DB they when they go back to view their saved songs/album it should be sorted alphabetically
-
-//}
-
 // Database
 function addSong(req, res){
   //takes in info from form and creates new object
@@ -205,6 +200,10 @@ function deleteSong(req, res) {
       return handleError(err, res);
     })
 }
+
+// Sort songs/album alphabetically
+// When a user saves a song/album in the DB and go back to view their saved songs/album it should be sorted alphabetically
+
 // Saved songs in Database
 function saved(req, res) {
 
@@ -219,17 +218,6 @@ function saved(req, res) {
 
         return 0;
       })
-      // const sortSongs = () => {
-      //   console.log('this is sortsongs',sortSongs);
-      //   songData.sort((a, b) => {
-      //     let sortSong = b.selection;
-      //     console.log('this is sortsong Moth##$#$#%',sortSong);
-      //     if(sortSong.toLowerCase() === searchStr.toLowerCase()) a.push
-      //     (b.selection)
-      //   });
-      //   return a;
-      // }
-      // sortSongs();
       console.log(songData);
       res.render('pages/saved', {playList: songData});
     }).catch(err => {

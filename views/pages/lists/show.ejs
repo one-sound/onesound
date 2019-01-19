@@ -19,10 +19,10 @@
             <h2>Your Saved Playlist</h2>
             <section class="playlist">
                 <% playList.forEach(song => { %>
-                    <li>
+                    <li class="fadeUp">
                         <%- include('../detail.ejs', {song: song}) %>
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit">Remove from playlist</button>
+                            <button class="remove" type="submit">Remove from playlist</button>
                         </form>
                     </li>
                 <% }); %>

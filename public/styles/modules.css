@@ -14,6 +14,8 @@ nav{
     z-index: 100;
 }
 
+ nav ul li{
+
 #logo{
     display: flex;
     justify-content: center;
@@ -29,20 +31,30 @@ nav{
 }
 
 nav ul li{
+
     list-style: none;
     display: block;
     margin-right: 20px;
 }
-nav ul{
+ nav ul{
     justify-content: center;
     align-content: center;
+
+    display: block;
+} 
+nav ul img{
+    height: 22px;
+    width: 22px;
+    margin-right: 15px;
+
+
 }
 
 nav a{
     color: white;
     font-size: 14pt;
     text-decoration: none;
-    color: #232323;
+    color: #ffffff;
     transition: color 0.3s ease;
 }
 nav a:hover {
@@ -106,6 +118,10 @@ figure li{
     transform-origin: 0% 100%;
 }
 
+#menu-toggle span:nth-last-child(2) {
+    transform-origin: 0% 100%; 
+}
+
 /* Transform all the slices of hamburger into a crossmark */
 #menu-toggle input:checked ~ span {
     opacity: 1;
@@ -132,7 +148,7 @@ figure li{
     padding: 50px;
     padding-top: 125px;
 
-    background: #ededed;
+    background: #bebebe transparent;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
 
@@ -153,8 +169,8 @@ figure li{
 }
 
 nav form, nav input, nav select{
-    display: inline;
-}
+    display: block;
+} 
 
 /* Form */
 input, textarea, button, select{
@@ -220,7 +236,7 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     padding: 15px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: center; 
 }
 .how-to-search ul {
     -moz-column-count: 2;
@@ -235,23 +251,12 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     height: 200px;
 }
 
-/* div:nth-child(even){background:#ff0000;color:#fff;}
-.fade-ani{opacity:0;position:relative;}
-.fade-up{bottom:-50px;}
-.fade-down{top:-50px;}
-.fade-left{left:-50px;}
-.fade-right{right:-50px;}
-
-.fade-ani.showing{}
-.fade-in.showing{opacity:1;}
-.fade-up.showing{bottom:0px;opacity:1;}
-.fade-down.showing{top:-0px;opacity:1;}
-.fade-left.showing{left:-0px;opacity:1;}
-.fade-right.showing{right:-0px;opacity:1;} */
-
+.how-to-search ul {
+    font-family: 'Shadows Into Light', cursive;
+}
 /* playlist results */
 
-.fade-ani.showing{}
+ /* .fade-ani.showing{}
 .fade-up.showing{
     opacity: 1;
 }
@@ -262,7 +267,23 @@ header input[type="text"]:focus, header select:focus, header button:hover{
 .fade-down.showing{
     top: -0px;
     opacity: 1;
-}
+} */
+
+/* .fade-ani{opacity:0;position:relative;}
+    .fade-up{bottom:-50px;}
+    .fade-down{top:-50px;}
+    .fade-left{left:-50px;}
+    .fade-right{right:-50px;}
+
+    .fade-ani.showing{}
+    .fade-in.showing{opacity:1;}
+    .fade-up.showing{bottom:0px;opacity:1;}
+    .fade-down.showing{top:-0px;opacity:1;}
+    .fade-left.showing{left:-0px;opacity:1;}
+    .fade-right.showing{right:-0px;opacity:1;} */
+
+
+
 .playlist li{
     list-style: none;
     clear: both;
@@ -273,33 +294,10 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     transition: all ease-out 0.5s 0s;
     opacity: 0.8;
     border-radius: 10px;
-}
-
-.playlist a{
-    text-decoration: none;
-    color: #961851;
-    font-weight: bold;
-}
-.playlist a:hover{
-    color: #e02c7d;
-    text-decoration: underline;
-    text-decoration-style: wavy;
-}
-
-.playlist li:nth-child(even){
-    background: #f4f4f4;
-    color: #030303;
-} 
-
-.fade-ani{
-    opacity: 0;
-    position: relative;
-}
-.fade-up{
-    bottom: -5px;
-}
-.fade-down{
-    bottom: -5px;
+    animation-duration: 3s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+       
 }
 
 .playlist li img{
@@ -322,8 +320,21 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     box-shadow: 0px 0px 8px #2b2b2b;
 }
 
+@media screen and (max-width: 480px){
+    nav{
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        border-bottom: 1px solid lightgray;
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+    }
+ 
+=======
 
 @media only screen and (max-width: 480px){
+
     nav a{
         text-decoration: none;
     }
@@ -354,6 +365,34 @@ header input[type="text"]:focus, header select:focus, header button:hover{
         border-bottom-right-radius: 5px;
     }
 
+    select{
+        border-radius: 0;
+    }
+    
+    header input[type="text"]:focus, header select:focus, header button:hover{
+        background-color: #030303;
+        color: #0a3c52;
+        transition: 0.3s;
+        border: none;
+        outline: none;
+    }
+    
+    /* about page */
+    .about figure{
+        width: 100%;
+        height: 220px;
+        border: 1px solid lightgray;
+        border-radius: 10px;
+        padding: 10px;
+        clear: both;
+    }
+    .about figure img{
+        float: left;
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        margin-right: 20px;
+    }
     
     /* playlist results */
     .playlist li{

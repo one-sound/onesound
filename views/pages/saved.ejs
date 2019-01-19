@@ -19,14 +19,18 @@
     <h2>Your Saved Playlist</h2>
         <p>Songs you are interested in will be saved below. You may add more or delete at any time. Enjoy! :)</p>
             <section class="playlist">
-                <% playList.forEach(song => { %>
-                    <li>
-                        <%- include('./detail.ejs', {song: song}) %>
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit">Remove from playlist</button>
-                        </form>
-                    </li>
-                <% }); %>
+
+                    <% playList.forEach(song => { %>
+                        <li class="tada">
+                            <%- include('./detail.ejs', {song: song}) %>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="remove" type="submit">Remove from playlist</button>
+                            </form>
+                        </li>
+                    <% }); %>
+                </section>
+    </section>
+
 </main>
     <section class="how-to-search">
         <div>
