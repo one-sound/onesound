@@ -65,7 +65,10 @@ footer a{
     .how-to-search figure{
         text-align: center;
         float: left;
-        width: calc((98% / 2) - 30px);
+        width: calc((100% / 2) - 20px);
+    }
+    .how-to-search figure:first-of-type{
+        margin-right: 30px;
     }
 
     /* Footer styling */
@@ -134,7 +137,6 @@ footer a{
         display: flex;
         flex-direction: column;
     }
-
     .how-to-search > div{
         max-width: 350px;
     }
