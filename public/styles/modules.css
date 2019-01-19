@@ -1,4 +1,5 @@
 /* Navigation styling */
+
 nav{
     box-sizing: border-box;
     width: 100%;
@@ -12,7 +13,25 @@ nav{
     position: fixed;
     z-index: 100;
 }
+
  nav ul li{
+
+#logo{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+#logo img{
+    height: 22px;
+    width: 22px;
+    margin-right: 10px;
+}
+#logo{
+    float: right;
+}
+
+nav ul li{
+
     list-style: none;
     display: block;
     margin-right: 20px;
@@ -20,13 +39,17 @@ nav{
  nav ul{
     justify-content: center;
     align-content: center;
+
     display: block;
 } 
 nav ul img{
     height: 22px;
     width: 22px;
     margin-right: 15px;
+
+
 }
+
 nav a{
     color: white;
     font-size: 14pt;
@@ -34,9 +57,18 @@ nav a{
     color: #ffffff;
     transition: color 0.3s ease;
 }
-
 nav a:hover {
-    color: tomato;
+    color: #961851;
+}
+
+.intro{
+    line-height: 1.5em;
+}
+figure{
+    margin-bottom: 5px;
+}
+figure li{
+    text-align: left;
 }
 
 #menu-toggle{
@@ -50,6 +82,7 @@ nav a:hover {
     -webkit-user-select: none;
     user-select: none;
 }
+
 
 #menu-toggle input {
     display: block;
@@ -111,7 +144,7 @@ nav a:hover {
 #menu {
     position: absolute;
     width: 300px;
-    margin: -100px 0 0 -50px;
+    margin: -100px 0 -50px -50px;
     padding: 50px;
     padding-top: 125px;
 
@@ -164,10 +197,13 @@ header button{
 select{
     border-radius: 0;
 }
+li button, #add-butt{
+    margin: 15px 0;
+    padding: 10px;
+    background-color: lightgray;
+}
 
 header input[type="text"]:focus, header select:focus, header button:hover{
-    background-color: #030303;
-    color: #5ca8df;
     transition: 0.3s;
     border: none;
     outline: none;
@@ -202,12 +238,13 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     display: flex;
     justify-content: center; 
 }
-.how-to-search div{
-    width: 960px;
-}
-.how-to-search figure{
-    float: left;
-    width: 440px;
+.how-to-search ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 20px;
+    column-count: 2;
+    column-gap: 20px;
 }
 .how-to-search img{
     width: 200px;
@@ -263,22 +300,6 @@ header input[type="text"]:focus, header select:focus, header button:hover{
        
 }
 
-/* .playlist li:nth-child(even){
-    background: #5ca8df;
-     color: #030303;
-} 
-
-.fade-ani{
-    opacity: 0;
-    position: relative;
-}
-.fade-up{
-    bottom: -5px;
-}
-.fade-down{
-    bottom: -5px;
-}  */
-
 .playlist li img{
     float: left;
     margin-right: 20px;
@@ -310,6 +331,10 @@ header input[type="text"]:focus, header select:focus, header button:hover{
         align-content: center;
     }
  
+=======
+
+@media only screen and (max-width: 480px){
+
     nav a{
         text-decoration: none;
     }
@@ -339,6 +364,7 @@ header input[type="text"]:focus, header select:focus, header button:hover{
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
     }
+
     select{
         border-radius: 0;
     }
@@ -370,7 +396,6 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     
     /* playlist results */
     .playlist li{
-       
         list-style: none;
         clear: both;
         border: 1px solid lightgray;
@@ -380,13 +405,16 @@ header input[type="text"]:focus, header select:focus, header button:hover{
         transition: 0.2s ease;
         opacity: 0.8;
         border-radius: 10px; 
+        display: flex;
+        flex-direction: column;
     }
     .playlist li img{
-        float: left;
-        margin-right: 20px;
         height: 150px;
         width: 150px;
         object-fit: contain;
+        float: none;
+        display: block !important;
+        align-self: center;
     }
     .playlist h5{
         margin-bottom: 20px;

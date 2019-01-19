@@ -17,7 +17,9 @@
     </header>
   <main>
     <h2>Your Saved Playlist</h2>
+        <p>Songs you are interested in will be saved below. You may add more or delete at any time. Enjoy! :)</p>
             <section class="playlist">
+
                     <% playList.forEach(song => { %>
                         <li class="tada">
                             <%- include('./detail.ejs', {song: song}) %>
@@ -28,7 +30,13 @@
                     <% }); %>
                 </section>
     </section>
+
 </main>
+    <section class="how-to-search">
+        <div>
+            <h3>Search to add new songs to your playlist!</h3>
+        </div>
+    </section>
 <%- include('../layout/footer') %>
 
 </body>

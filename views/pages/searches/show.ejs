@@ -18,6 +18,9 @@
         <main>
             <h2>Your Customized Playlist</h2>
             <section class="playlist">
+
+            <!-- <section class="playlist fade-down fade-ani fade-up"> -->
+
                 <% playList.forEach(song => { %>
                     <li class="fadeInUp delay-0s  fade-in fade-ani fade-up fade-ani fade-down fade-ani fade-left fade-ani fade-in fade-ani">
                         <%- include('../detail.ejs', {song: song}) %>
