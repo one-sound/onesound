@@ -6,7 +6,6 @@ header{
     color: white;
     width: 100%;
     height: 550px;
-    /* background: linear-gradient(180deg, rgba(197,70,100,1) 0%, rgba(13,1,117,1) 100%);  */
 }
 .header-content{
     text-align: center;
@@ -36,7 +35,6 @@ header{
 /* Main + Section styling */
 main{
     width: 960px;
-    margin: 0 auto;
 }
 
 
@@ -55,101 +53,93 @@ footer a{
 }
 
 
-@media screen and(min-width: 960px){
-      /* Header styling */
-header{
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    color: white;
-    width: 90%;
-    height: 450px;
-    background: url('../assets/header-bg.png') repeat; /* placeholder ish for now*/
-    /* background: linear-gradient(180deg, rgba(197,70,100,1) 0%, rgba(13,1,117,1) 100%);  */
-}
-.header-content{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-}
+@media screen and (min-width: 960px){
+    /* Main + Section styling */
+    main{
+        margin: 0 auto;
+    }
 
-/* Main + Section styling */
-main{
-    width: 350px;
-    margin: 0 auto;
+    .inside{
+        width: 960px;
+    }
+    .how-to-search figure{
+        text-align: center;
+        float: left;
+        width: calc((98% / 2) - 30px);
+    }
+
+    /* Footer styling */
+    footer{
+        display: flex;
+        justify-content: space-around;
+        padding: 20px;
+    }
+    footer a{
+        text-decoration: none;
+        color: #5ca8df;
+        line-height: 24pt;
+    }
 }
-
-
-/* Footer styling */
-footer{
-    background:linear-gradient(180deg, #360265 0%, rgba(13,1,117,1) 100%);
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-}
-footer a{
-    text-decoration: none;
-    color: #5ca8df;
-    line-height: 24pt;
-}
-}
-
-
-
 
 @media screen and (max-width: 480px){
     /* Header styling */
-header{
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    color: white;
-    width: 100%;
-    height: 450px;
-    background: url('../assets/header-bg.png') repeat; /* placeholder ish for now*/
-    /* background: linear-gradient(180deg, rgba(197,70,100,1) 0%, rgba(13,1,117,1) 100%);  */
-}
+    header{
+        height: 450px;
+    }
 
-.burger-nav {
-    display: block;
-    height: 40px;
-    width: 100%;
-    background: url('../assets/burger.png') no repeat 98% center;
-    background-color: #fcf5f5;
+    .burger-nav {
+        display: block;
+        height: 40px;
+        width: 100%;
+        background: url('../assets/burger.png') no repeat 98% center;
+        background-color: #fcf5f5;
 
-}
+    }
 
-.header-content{
-    /* text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center; */
-    width: 100%;
-    margin: 20px;
-}
+    .header-content{
+        width: 100%;
+        margin: 20px;
+    }
 
 
-/* Main + Section styling */
-main{
-    width: 100%;
-    margin: 0 auto;
-}
+    /* Main + Section styling */
+    main{
+        width: 100%;
+        margin: 0 auto;
+    }
 
-/* Footer styling */
-footer{
-    background:linear-gradient(180deg, #360265 0%, rgba(13,1,117,1) 100%);
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-}
-footer a{
-    text-decoration: none;
-    color: #5ca8df;
-    line-height: 24pt;
-}
+    nav{
+        box-sizing: border-box;
+        width: 100%;
+        height: 50px;
+        padding: 15px;
+        background-color: rgba(0, 0, 0, 0.9);
+        border-bottom: 1px solid black;
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        position: fixed;
+        z-index: 100;
+    }
+
+    #logo img{
+        height: 22px;
+        width: 22px;
+        margin-right: 10px;
+    }
+
+    .how-to-search{
+        text-align: center;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .how-to-search > div{
+        max-width: 350px;
+    }
+    figure p{
+        width: 100%;
+        display: block;
+    }
 }

@@ -11,18 +11,13 @@ body{
     margin: 0;
 }
 
-
 main{
     padding: 20px;
 }
 
-figure{
-    width: calc(100%/3 - 10px);
-    margin: 15px;
-    
-}
 p{
     margin: 20px 0;
+    text-align: left;
 }
 
 
@@ -38,11 +33,12 @@ h1{
 h2{
     font-size: 24pt;
     margin-top: 15px;
+    display: block;
 }
 h3{
     font-size: 16pt;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin: 15px 0;
 }
 h4{
     font-family: Timmana, Arial, Helvetica, sans-serif;
@@ -56,7 +52,7 @@ h5{
 
 #add-butt {
     width: 60px;
-    background-color: rgb(13, 116, 184);
+    background-color: #e02c7d;
 }
 
 /* Mobile view */
@@ -65,24 +61,30 @@ h5{
     body{
         font-family: Barlow, Arial, sans-serif;
         margin: 0;
-       
     }
     main{
         padding: 10px;
     } 
-    
-    .how-to-search{
-        display: inline-block; 
-        /* width: 90%; */
-        margin: 10px 5%;
-        padding: 10px; 
-        /* border: 5px solid #5ca8df;  */
-        /* padding: 5px;  */
-    } 
-    
-    figure{
-        width: 90%;
-        margin: 15px 5%;
+
+    section{
+        padding: 15px;
+    }
+
+    .about{
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .about figure{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+    }
+
+    .about figure img{
+        display: block;
+        align-self: center;
     }
     
     /* Text styling */
@@ -95,7 +97,7 @@ h5{
         text-shadow: 3px 3px #0a3c52;
     }
     h2{
-        font-size: 12pt;
+        font-size: 24pt;
         margin-top: 15px;
         text-align: center;
     }
@@ -103,14 +105,11 @@ h5{
         font-size: 16pt;
         font-weight: bold;
         margin-bottom: 15px;
+        display: block;
+        align-self: center;
     }
     h5{
-        font-size: 7pt;
+        font-size: 14pt;
     }
-    
-    #add-butt {
-        width: 30px;
-        background-color: rgb(13, 116, 184);
-    }
-    
+        
 }
