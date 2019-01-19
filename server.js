@@ -46,9 +46,6 @@ function about(req, res) {
 }
 
 
-// var genre = music.genres.get;
-var baseURL = 'https://api.musixmatch.com/ws/1.1';
-
 // Search
 function search(req, res) {
   let searchStr = req.body.search[0];
@@ -250,7 +247,7 @@ function musicMatcher(tracks, res){
     if (song.country && song.genre && song.genre !== '-') return song;
   })[0];
 
-  let urls = makeURL(songMatch, 50);
+  let urls = makeURL(songMatch, 100);
   // console.log(urls)
   let list = [];
 
@@ -264,7 +261,7 @@ function musicMatcher(tracks, res){
         if (addedTrack === undefined){
           console.log('** INVALID');
         } else if (addedTrack.track !== undefined){
-          // console.log('** ' + i + ' ' + addedTrack.track.artist_name + ' ' + urls[i][1])
+          console.log('** ' + i + ' ' + addedTrack.track.artist_name + ' ' + urls[i][1])
           let language = urls[i][1];
           // console.log(urls[i][])
           let albumData = getAlbumData(addedTrack.track);
@@ -273,6 +270,7 @@ function musicMatcher(tracks, res){
             list.push(newSong);
             if (list.length === 10){
               console.log('** COMPLETE')
+              console.log(list);
               res.render('pages/searches/show', {playList: list});
             }
           })

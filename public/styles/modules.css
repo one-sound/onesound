@@ -1,4 +1,5 @@
 /* Navigation styling */
+
 nav{
     box-sizing: border-box;
     width: 100%;
@@ -12,21 +13,31 @@ nav{
     position: fixed;
     z-index: 100;
 }
-/* nav ul li{
+
+#logo{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+#logo img{
+    height: 22px;
+    width: 22px;
+    margin-right: 10px;
+}
+#logo{
+    float: right;
+}
+
+nav ul li{
     list-style: none;
-    display: inline;
+    display: block;
     margin-right: 20px;
 }
 nav ul{
     justify-content: center;
     align-content: center;
-    display: flex;
 }
-nav ul img{
-    height: 22px;
-    width: 22px;
-    margin-right: 15px;
-}
+
 nav a{
     color: white;
     font-size: 14pt;
@@ -34,9 +45,18 @@ nav a{
     color: #232323;
     transition: color 0.3s ease;
 }
-
 nav a:hover {
-    color: tomato;
+    color: #961851;
+}
+
+.intro{
+    line-height: 1.5em;
+}
+figure{
+    margin-bottom: 5px;
+}
+figure li{
+    text-align: left;
 }
 
 #menu-toggle{
@@ -50,6 +70,7 @@ nav a:hover {
     -webkit-user-select: none;
     user-select: none;
 }
+
 
 #menu-toggle input {
     display: block;
@@ -107,7 +128,7 @@ nav a:hover {
 #menu {
     position: absolute;
     width: 300px;
-    margin: -100px 0 0 -50px;
+    margin: -100px 0 -50px -50px;
     padding: 50px;
     padding-top: 125px;
 
@@ -160,10 +181,13 @@ header button{
 select{
     border-radius: 0;
 }
+li button, #add-butt{
+    margin: 15px 0;
+    padding: 10px;
+    background-color: lightgray;
+}
 
 header input[type="text"]:focus, header select:focus, header button:hover{
-    background-color: #030303;
-    color: #5ca8df;
     transition: 0.3s;
     border: none;
     outline: none;
@@ -198,12 +222,13 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     display: flex;
     justify-content: center;
 }
-.how-to-search div{
-    width: 960px;
-}
-.how-to-search figure{
-    float: left;
-    width: 440px;
+.how-to-search ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 20px;
+    column-count: 2;
+    column-gap: 20px;
 }
 .how-to-search img{
     width: 200px;
@@ -250,9 +275,20 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     border-radius: 10px;
 }
 
+.playlist a{
+    text-decoration: none;
+    color: #961851;
+    font-weight: bold;
+}
+.playlist a:hover{
+    color: #e02c7d;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+}
+
 .playlist li:nth-child(even){
-    background: #5ca8df;
-     color: #030303;
+    background: #f4f4f4;
+    color: #030303;
 } 
 
 .fade-ani{
@@ -265,9 +301,6 @@ header input[type="text"]:focus, header select:focus, header button:hover{
 .fade-down{
     bottom: -5px;
 }
-
-
-
 
 .playlist li img{
     float: left;
@@ -289,21 +322,8 @@ header input[type="text"]:focus, header select:focus, header button:hover{
     box-shadow: 0px 0px 8px #2b2b2b;
 }
 
-@media screen and (max-width: 480px){
-    nav{
-        width: 100%;
-        height: 40px;
-        padding: 10px;
-        background-color: rgb(226, 12, 12);
-        border-bottom: 1px solid lightgray;
-        display: flex;
-        justify-content: space-between;
-        align-content: center;
-    }
-    /* nav ul li{
-        list-style: none;
-        display: inline;
-    } */
+
+@media only screen and (max-width: 480px){
     nav a{
         text-decoration: none;
     }
@@ -333,39 +353,10 @@ header input[type="text"]:focus, header select:focus, header button:hover{
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
     }
-    select{
-        border-radius: 0;
-    }
-    
-    header input[type="text"]:focus, header select:focus, header button:hover{
-        background-color: #030303;
-        color: #0a3c52;
-        transition: 0.3s;
-        border: none;
-        outline: none;
-        /* width: 60%; */
-    }
-    
-    /* about page */
-    .about figure{
-        width: 100%;
-        height: 220px;
-        border: 1px solid lightgray;
-        border-radius: 10px;
-        padding: 10px;
-        clear: both;
-    }
-    .about figure img{
-        float: left;
-        width: 200px;
-        height: 200px;
-        object-fit: cover;
-        margin-right: 20px;
-    }
+
     
     /* playlist results */
     .playlist li{
-       
         list-style: none;
         clear: both;
         border: 1px solid lightgray;
@@ -375,13 +366,16 @@ header input[type="text"]:focus, header select:focus, header button:hover{
         transition: 0.2s ease;
         opacity: 0.8;
         border-radius: 10px; 
+        display: flex;
+        flex-direction: column;
     }
     .playlist li img{
-        float: left;
-        margin-right: 20px;
         height: 150px;
         width: 150px;
         object-fit: contain;
+        float: none;
+        display: block !important;
+        align-self: center;
     }
     .playlist h5{
         margin-bottom: 20px;
