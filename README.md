@@ -22,7 +22,7 @@ OneSound aims to unite people of all cultures through the love of music. Users w
 - Method-Override
 
 ## How to Use
-Onesound can be accessed at [one-sound.herokuapp.com](https://one-sound.herokuapp.com). To start, the user must search by artist or genre. From there, a list of recommended songs will be generated. The user may add songs they are interested in to their playlist, which can also be accessed through the navigation bar. Saved songs can also be removed at any time. Within the generated data will be links to Wikipedia that can allow the user to delve deeper into learning about an artist or language.
+Onesound can be accessed at [onesound1.herokuapp.com](https://onesound1.herokuapp.com/). To start, the user must search by artist or genre. From there, a list of recommended songs will be generated. The user may add songs they are interested in to their playlist, which can also be accessed through the navigation bar. Saved songs can also be removed at any time. Within the generated data will be links to Wikipedia that can allow the user to delve deeper into learning about an artist or language.
 
 ## API Endpoints
 #### Getting Tracks
