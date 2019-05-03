@@ -78,9 +78,7 @@ function getComparisonSong(url, req, res, searchStr){
       console.log(musics);
       let trackList = musics.message.body.track_list;
       console.log(trackList)
-      // trackList.forEach(song => {
-      //   // console.log(song.track.primary_genres.music_genre_list);
-      // })
+      
 
       trackList.forEach(song => {
 
@@ -139,7 +137,7 @@ function getAlbumData(song){ //what will be used to obtain album art data + rele
 }
 
 function fetchGenre(searchStr){
-  //console.log('** Fetching Genre')
+
   let url = `https://api.musixmatch.com/ws/1.1/music.genres.get?apikey=${process.env.MUSIXMATCH_API_KEY}`;
 
   return superagent.get(url)
@@ -167,7 +165,7 @@ function addSong(req, res){
   let addedSong = new dbMusic(req.body);
   console.log('THIS IS THE ADDED SONG AT THE START', addedSong)
   let songs = Object.values(addedSong);
-  // songs.pop();
+
 
   //adds to SQL
   let SQL = `INSERT INTO music
@@ -189,7 +187,7 @@ function addSong(req, res){
 function deleteSong(req, res) {
   console.log(`deleting the song ${req.body.song}`);
   client.query(`DELETE FROM music WHERE song=$1`, [req.body.song])
-  // client.query(`DELETE FROM music WHERE `)
+ 
     .then(result => {
       console.log(result);
       res.redirect('/saved');
@@ -235,7 +233,7 @@ function musicMatcher(tracks, res){
   })[0];
 
   let urls = makeURL(songMatch, 100);
-  // console.log(urls)
+  
   let list = [];
 
   Promise.all(urls.map(getter))
@@ -243,14 +241,14 @@ function musicMatcher(tracks, res){
       for (var i in urls){
         let parsedResult = JSON.parse(result[i].text);
         let addedTrack = parsedResult.message.body.track_list[0];
-        // console.log(addedTrack);
+        
 
         if (addedTrack === undefined){
           console.log('** INVALID');
         } else if (addedTrack.track !== undefined){
           console.log('** ' + i + ' ' + addedTrack.track.artist_name + ' ' + urls[i][1])
           let language = urls[i][1];
-          // console.log(urls[i][])
+          
           let albumData = getAlbumData(addedTrack.track);
           albumData.then(data => {
             let newSong = new Music(addedTrack.track, language, data);
